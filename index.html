@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The World as a Canvas — UIST '26 Workshop</title>
+<meta name="description" content="A UIST 2026 workshop on how generative AI can lower the barriers to creating XR experiences. November 2, 2026, Detroit, MI, USA.">
+<meta property="og:title" content="The World as a Canvas — UIST '26 Workshop">
+<meta property="og:description" content="Materializing Imagination through Prompting the Physical World. UIST 2026, November 2, Detroit, MI, USA.">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#fbfaf8; --surface:#ffffff; --border:#e6e1d8;
+  --ink:#1a1714; --ink-soft:#5c554c; --ink-faint:#8a8175;
+  --accent:#c2410c; --accent-soft:#fff1e8; --accent-line:#f0c9b3;
+  --grid:#eae5db;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --wrap:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#14120f; --surface:#1c1915; --border:#332e27;
+    --ink:#f2eee7; --ink-soft:#b3aa9d; --ink-faint:#857c6f;
+    --accent:#fb923c; --accent-soft:#2a1a0e; --accent-line:#5c3a1e;
+    --grid:#221f1a;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--border);
+}
+nav .wrap{display:flex;align-items:center;gap:8px;height:58px;overflow-x:auto;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav .brand{
+  font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);
+  margin-right:auto;white-space:nowrap;letter-spacing:-.01em;
+}
+nav a.lnk{
+  font-size:14px;color:var(--ink-soft);white-space:nowrap;
+  padding:6px 11px;border-radius:7px;
+}
+nav a.lnk:hover{background:var(--accent-soft);color:var(--accent);text-decoration:none}
+
+/* ---------- hero ---------- */
+header{
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+  background:
+    linear-gradient(to bottom,transparent 55%,var(--bg) 100%),
+    repeating-linear-gradient(0deg,var(--grid) 0 1px,transparent 1px 44px),
+    repeating-linear-gradient(90deg,var(--grid) 0 1px,transparent 1px 44px);
+}
+header .wrap{padding-top:88px;padding-bottom:76px;position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-soft);
+  border:1px solid var(--accent-line);border-radius:999px;padding:6px 15px;
+  margin-bottom:26px;
+}
+h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(2.7rem,7.2vw,4.6rem);line-height:1.03;
+  letter-spacing:-.028em;margin:0 0 20px;max-width:22ch;
+}
+.tagline{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.2rem,2.9vw,1.7rem);line-height:1.38;
+  color:var(--ink-soft);margin:0 0 38px;max-width:34ch;
+}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.fact{
+  display:flex;align-items:center;gap:9px;
+  background:var(--surface);border:1px solid var(--border);border-radius:9px;
+  padding:9px 15px;font-size:14.5px;color:var(--ink-soft);
+}
+.fact b{color:var(--ink);font-weight:600}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);color:#fff;
+  padding:13px 24px;border-radius:9px;
+  font-size:15px;font-weight:600;letter-spacing:-.005em;
+}
+.btn:hover{filter:brightness(1.08);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--border)}
+.btn.ghost:hover{background:var(--surface);filter:none}
+
+/* ---------- sections ---------- */
+section{padding:78px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:0}
+.shead{margin-bottom:36px;max-width:62ch}
+.snum{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.11em;
+  color:var(--ink-faint);text-transform:uppercase;display:block;margin-bottom:11px;
+}
+h2{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.75rem,3.6vw,2.4rem);line-height:1.14;
+  letter-spacing:-.02em;margin:0 0 14px;
+}
+.shead p{color:var(--ink-soft);margin:0;font-size:16.5px}
+.prose{max-width:68ch}
+.prose p{margin:0 0 18px}
+.prose p:last-child{margin-bottom:0}
+
+/* ---------- topics ---------- */
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(305px,1fr));gap:18px}
+.topic{
+  background:var(--surface);border:1px solid var(--border);border-radius:13px;
+  padding:26px 24px;position:relative;
+  transition:border-color .18s ease,transform .18s ease;
+}
+.topic:hover{border-color:var(--accent-line);transform:translateY(-2px)}
+.topic .tn{
+  font-family:var(--mono);font-size:12px;color:var(--accent);
+  letter-spacing:.08em;display:block;margin-bottom:12px;
+}
+.topic h3{
+  font-family:var(--serif);font-size:1.19rem;font-weight:600;
+  line-height:1.26;letter-spacing:-.012em;margin:0 0 11px;
+}
+.topic p{margin:0;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+.topic .q{
+  margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);
+  font-size:14.5px;color:var(--ink-faint);font-style:italic;
+}
+
+/* ---------- schedule ---------- */
+.sched{max-width:760px}
+.slot{
+  display:grid;grid-template-columns:112px 1fr;gap:22px;
+  padding:19px 0;border-top:1px solid var(--border);
+}
+.slot:last-child{border-bottom:1px solid var(--border)}
+.slot .dur{
+  font-family:var(--mono);font-size:13px;color:var(--accent);
+  padding-top:3px;white-space:nowrap;
+}
+.slot h4{font-size:1.03rem;font-weight:600;margin:0 0 5px;letter-spacing:-.008em}
+.slot p{margin:0;font-size:15px;color:var(--ink-soft);line-height:1.58}
+.slot.brk{opacity:.6}
+.slot.brk h4{font-weight:500;font-style:italic}
+.note{
+  margin-top:22px;font-size:14.5px;color:var(--ink-faint);
+  display:flex;gap:9px;align-items:flex-start;
+}
+
+/* ---------- cfp ---------- */
+.cfp-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:start}
+@media (max-width:820px){.cfp-grid{grid-template-columns:1fr;gap:30px}}
+.cfp-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:13px;
+  padding:28px 26px;
+}
+.cfp-box h3{
+  font-family:var(--serif);font-size:1.15rem;font-weight:600;margin:0 0 18px;
+  letter-spacing:-.01em;
+}
+.dl{display:flex;flex-direction:column;gap:15px;margin:0}
+.dl .row{display:flex;flex-direction:column;gap:3px}
+.dl dt{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+.dl dd{margin:0;font-size:15.5px;font-weight:600}
+.tba{
+  display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:600;
+  letter-spacing:.07em;color:var(--accent);background:var(--accent-soft);
+  border:1px dashed var(--accent-line);border-radius:5px;padding:2px 8px;
+  vertical-align:1px;
+}
+ul.clean{margin:0;padding-left:20px}
+ul.clean li{margin-bottom:11px;color:var(--ink-soft);font-size:16px}
+ul.clean li:last-child{margin-bottom:0}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ---------- organizers ---------- */
+.orgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+.org{
+  background:var(--surface);border:1px solid var(--border);border-radius:11px;
+  padding:19px 20px;
+}
+.org .nm{font-weight:600;font-size:16px;letter-spacing:-.008em;margin-bottom:4px}
+.org .af{font-size:14.5px;color:var(--ink-soft);line-height:1.45}
+
+/* ---------- footer ---------- */
+footer{padding:52px 0 68px;font-size:14.5px;color:var(--ink-faint)}
+footer .fl{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-start}
+footer p{margin:0 0 12px;max-width:62ch;line-height:1.6}
+footer .kw{font-family:var(--mono);font-size:12.5px;letter-spacing:.05em}
+
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .wrap{padding:0 20px}
+  header .wrap{padding-top:58px;padding-bottom:54px}
+  section{padding:58px 0}
+  .slot{grid-template-columns:1fr;gap:7px}
+  .slot .dur{padding-top:0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">The World as a Canvas</span>
+    <a class="lnk" href="#about">About</a>
+    <a class="lnk" href="#topics">Topics</a>
+    <a class="lnk" href="#schedule">Schedule</a>
+    <a class="lnk" href="#cfp">Participate</a>
+    <a class="lnk" href="#organizers">Organizers</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">UIST '26 Workshop · Detroit</span>
+    <h1>The World as a Canvas</h1>
+    <p class="tagline">Materializing Imagination through Prompting the Physical World</p>
+    <div class="facts">
+      <span class="fact">📅 <b>November 2, 2026</b></span>
+      <span class="fact">📍 <b>Detroit, MI, USA</b></span>
+      <span class="fact">🗓 <b>Full day</b>, in person</span>
+      <span class="fact">👥 <b>25–35</b> participants</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn" href="#cfp">Call for Participation</a>
+      <a class="btn ghost" href="https://uist.acm.org/2026/" target="_blank" rel="noopener">UIST 2026 ↗</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">01 — About</span>
+      <h2>Generative AI can build a world in minutes. Why not an XR world?</h2>
+    </div>
+    <div class="prose">
+      <p>This workshop brings together researchers and practitioners in HCI, eXtended Reality (XR), and AI to explore how generative AI can lower barriers to creating XR experiences. Generative AI can now turn rough ideas into images, videos, and apps within minutes, yet creating XR experiences remains demanding.</p>
+      <p>XR creations must be grounded in physical space, previewed before they exist, steered through multimodal user inputs, co-created across heterogeneous devices, inspected for AI errors that unfold in interaction, and shared beyond a single headset.</p>
+      <p>Through keynotes, posters and demos, and hands-on prototyping activities, we will explore these challenges, derive design considerations, and distill a shared research agenda. The outcomes will be published on this website and seed a growing community advancing how generative AI-powered XR can support everyday creativity.</p>
+    </div>
+  </div>
+</section>
+
+<section id="topics">
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">02 — Scope</span>
+      <h2>Six challenges we will work through</h2>
+      <p>Each theme frames open questions that we will refine together and carry into the afternoon prototyping session.</p>
+    </div>
+    <div class="topics">
+
+      <div class="topic">
+        <span class="tn">01</span>
+        <h3>In-situ Creation within Physical Space</h3>
+        <p>In-situ XR creation must account for the user's physical surroundings, from coarse properties such as lighting, scale, and object categories down to finer ones such as material and weight.</p>
+        <div class="q">How can generative models produce content and behaviors that stay physically plausible? What limits how finely creators can author such interactions — sensing, representations, or generative pipelines?</div>
+      </div>
+
+      <div class="topic">
+        <span class="tn">02</span>
+        <h3>Previsualization and Mental Imagery</h3>
+        <p>At the outset, creators picture the result and mentally project it onto their space, yet people differ greatly in how vividly they can do this.</p>
+        <div class="q">How much should tools previsualize to support imagination without anchoring creators, and in what form? Beyond showing outcomes, how can previews help creators develop their own mental imagery?</div>
+      </div>
+
+      <div class="topic">
+        <span class="tn">03</span>
+        <h3>Expressing and Interpreting Creative Intent</h3>
+        <p>In XR, creators speak with more than words; gesture, gaze, facial expression, and movement all carry meaning.</p>
+        <div class="q">What creative intent do people convey through these signals, and how should generative AI interpret it? How can creators and AI negotiate ambiguous intent and refine a creation through iteration?</div>
+      </div>
+
+      <div class="topic">
+        <span class="tn">04</span>
+        <h3>Co-Creation across Hardware Heterogeneity</h3>
+        <p>Collaborators rarely hold identical devices; one may wear a headset while another joins from a tablet or phone.</p>
+        <div class="q">How can generative AI adapt content and interactions across devices to maintain coherent co-creation when input, display, and compute vary widely? What roles suit each device?</div>
+      </div>
+
+      <div class="topic">
+        <span class="tn">05</span>
+        <h3>Evaluating Generated Content</h3>
+        <p>Generative AI inevitably makes mistakes, and in XR such errors are especially hard to inspect and repair — they may surface only through interaction, across viewpoints, and over time.</p>
+        <div class="q">How can interfaces help creators detect errors and evaluate quality? At which stage of a pipeline should errors be caught, and how can that be made transparent?</div>
+      </div>
+
+      <div class="topic">
+        <span class="tn">06</span>
+        <h3>Cross-Media Creation, Transformation, and Provenance</h3>
+        <p>Existing images, videos, stories, and objects can become interactive XR experiences, while XR creations can be translated into videos or physical artifacts.</p>
+        <div class="q">What should be preserved, transformed, or newly generated in such translations? As content is remixed, how can provenance, attribution, and ownership remain traceable?</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">03 — Program</span>
+      <h2>A day built around making things</h2>
+      <p>A full-day, in-person event designed around hands-on interaction and community building.</p>
+    </div>
+    <div class="sched">
+
+      <div class="slot">
+        <span class="dur">45 min</span>
+        <div>
+          <h4>Opening and Speed Introductions</h4>
+          <p>Organizers welcome participants and outline the day's goals. Seated in two facing rows, participants introduce themselves one-on-one for two minutes, then rotate to a new partner using a pre-collected introduction slide and ice-breaking prompts.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <span class="dur">45 min</span>
+        <div>
+          <h4>Keynote I &nbsp;<span class="tba">Speaker TBA</span></h4>
+          <p>A 30-minute talk followed by 15 minutes of Q&amp;A. Across the two keynotes we invite speakers representing academia and industry to share their perspectives on XR and generative AI for authoring interactive experiences.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <span class="dur">75 min</span>
+        <div>
+          <h4>Poster and Demo Session</h4>
+          <p>Posters and demos selected through the call for participation are set up as stations around the room, where participants try the systems firsthand and talk with their presenters. Each participant carries a short passport to note challenges they encounter and ideas the systems inspire.</p>
+        </div>
+      </div>
+
+      <div class="slot brk">
+        <span class="dur">—</span>
+        <div><h4>Lunch break</h4></div>
+      </div>
+
+      <div class="slot">
+        <span class="dur">45 min</span>
+        <div>
+          <h4>Keynote II &nbsp;<span class="tba">Speaker TBA</span></h4>
+          <p>A second 30-minute talk with 15 minutes of Q&amp;A, establishing shared context for the afternoon's hands-on work.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <span class="dur">30 min</span>
+        <div>
+          <h4>Group Discussion</h4>
+          <p>Organizers lay out challenge buckets drawn from the workshop scope, and participants form teams around the topics they find most compelling. Drawing on the keynotes, demos, and their passport notes, each team defines one concrete problem to address.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <span class="dur">45 min</span>
+        <div>
+          <h4>Low-Fidelity Prototyping</h4>
+          <p>Each team develops its challenge into a low-fidelity prototype. To enable rapid XR prototyping within limited time, we provide disposable clear face shields as stand-ins for optical see-through displays. Participants draw visual cues directly on the shields and use sketches and sticky notes to represent other modalities such as haptics and audio.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <span class="dur">45 min</span>
+        <div>
+          <h4>Closing and Next Steps</h4>
+          <p>Each team gives a five-minute presentation on its outcomes. Organizers summarize the day, outline the post-workshop plan, and invite participants to a persistent community channel.</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="note"><span>↳</span><span>The order above is tentative and exact clock times will be announced closer to the event.</span></p>
+
+    <div class="shead" style="margin-top:56px">
+      <h2 style="font-size:1.4rem">After the workshop</h2>
+    </div>
+    <div class="prose">
+      <p>We will consolidate the outcomes into a shared document and publish it here. The document will summarize the challenges explored by each team along with the ideas and scenarios behind the low-fidelity prototypes — a lasting record of the workshop, accessible to the broader community.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cfp">
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">04 — Call for Participation</span>
+      <h2>Bring a demo, however early</h2>
+    </div>
+    <div class="cfp-grid">
+      <div>
+        <ul class="clean">
+          <li>We invite <b>researchers, designers, and practitioners</b> working on XR authoring, generative AI, and creativity support.</li>
+          <li>We equally welcome those <b>applying these technologies in practice</b> — in education, industrial design, and remote collaboration.</li>
+          <li><b>Interactive demos are especially welcome</b>, whether polished or early-stage, across the full XR spectrum.</li>
+          <li>If you would like to present a demo, please <b>briefly describe your setup and equipment needs</b> so we can coordinate with the venue.</li>
+        </ul>
+      </div>
+      <div class="cfp-box">
+        <h3>Key dates</h3>
+        <dl class="dl">
+          <div class="row">
+            <dt>Submission deadline</dt>
+            <dd><span class="tba">TBA</span></dd>
+          </div>
+          <div class="row">
+            <dt>Notification</dt>
+            <dd><span class="tba">TBA</span></dd>
+          </div>
+          <div class="row">
+            <dt>Workshop day</dt>
+            <dd>November 2, 2026</dd>
+          </div>
+          <div class="row">
+            <dt>How to submit</dt>
+            <dd><span class="tba">TBA</span></dd>
+          </div>
+          <div class="row">
+            <dt>Questions</dt>
+            <dd style="font-weight:500;font-size:15px"><a href="mailto:hyuna.seo@hcs.snu.ac.kr">hyuna.seo@hcs.snu.ac.kr</a></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="organizers">
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">05 — Organizers</span>
+      <h2>Organizers</h2>
+    </div>
+    <div class="orgs">
+      <div class="org"><div class="nm">HyunA Seo</div><div class="af">Seoul National University</div></div>
+      <div class="org"><div class="nm">Nels Numan</div><div class="af">Google</div></div>
+      <div class="org"><div class="nm">Hye-Young Jo</div><div class="af">University of Colorado Boulder</div></div>
+      <div class="org"><div class="nm">Jaewook Lee</div><div class="af">University of Washington</div></div>
+      <div class="org"><div class="nm">Jon E. Froehlich</div><div class="af">University of Washington</div></div>
+      <div class="org"><div class="nm">Ruofei Du</div><div class="af">Google XR</div></div>
+      <div class="org"><div class="nm">Ryo Suzuki</div><div class="af">University of Colorado Boulder</div></div>
+      <div class="org"><div class="nm">Youngki Lee</div><div class="af">Seoul National University</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fl">
+      <div>
+        <p><b style="color:var(--ink)">The World as a Canvas</b> · A workshop at the 39th Annual ACM Symposium on User Interface Software and Technology (UIST '26), November 2, 2026, Detroit, MI, USA.</p>
+        <p class="kw">Extended Reality · Generative AI · Creativity Support Tools · XR Authoring</p>
+      </div>
+      <div>
+        <p>Supported by the National Research Foundation of Korea (NRF) grant funded by the Korean government (MSIT) (No. RS-2024-00463802), JST PRESTO Grant Number JPMJPR23I5, and NSF CAREER Award IIS-2543251.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
