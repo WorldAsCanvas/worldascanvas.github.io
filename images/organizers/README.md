@@ -1,25 +1,19 @@
 # Organizer photos
 
-Drop face photos here and they appear on the site automatically — no HTML editing needed.
-If a file is missing, the site falls back to a red circle with the person's initials.
-
-## Filenames
-
-Use exactly these names (lowercase, hyphenated). `.jpg` or `.png` both work.
+These are wired into `index.html` by exact filename, so **renaming a file here
+means editing the matching `<img src>` in the Organizers section.** If an image
+fails to load the site falls back to a blue circle with the person's initials.
 
 | File | Person |
 |---|---|
-| `hyuna-seo.jpg` | HyunA Seo |
-| `nels-numan.jpg` | Nels Numan |
-| `hye-young-jo.jpg` | Hye-Young Jo |
-| `jaewook-lee.jpg` | Jaewook Lee |
-| `jon-froehlich.jpg` | Jon E. Froehlich |
-| `ruofei-du.jpg` | Ruofei Du |
-| `ryo-suzuki.jpg` | Ryo Suzuki |
-| `youngki-lee.jpg` | Youngki Lee |
+| `HyunA.jpg` | HyunA Seo |
+| `Nels.jpg` | Nels Numan |
+| `Hyeyoung.webp` | Hye-Young Jo |
+| `Jae.jpg` | Jaewook Lee |
+| `Jon.jpg` | Jon E. Froehlich |
+| `Ruofei.jpg` | Ruofei Du |
+| `RyoSuzuki.avif` | Ryo Suzuki |
+| `Youngki.jpeg` | Youngki Lee |
 
-## Image guidance
-
-- **Square crop**, face centred — they are displayed as circles
-- **400×400 px** or larger; anything past 800×800 is wasted bytes
-- Keep each file under ~200 KB so the page stays fast
+They are displayed as circles, so a square crop centred on the face reads best.
+400×400 or larger is plenty; anything past 800×800 is wasted bytes.

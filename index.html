@@ -3,508 +3,757 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The World as a Canvas — UIST '26 Workshop</title>
-<meta name="description" content="A UIST 2026 workshop on how generative AI can lower the barriers to creating XR experiences. November 2, 2026, Detroit, MI, USA.">
-<meta property="og:title" content="The World as a Canvas — UIST '26 Workshop">
-<meta property="og:description" content="Materializing Imagination through Prompting the Physical World. UIST 2026, November 2, Detroit, MI, USA.">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#0a0a0a">
+<title>The World as a Canvas</title>
+<meta name="color-scheme" content="light only">
+
+<!-- Tab and home-screen icons. favicon.ico stays at the root because browsers
+     request /favicon.ico whether or not it is declared. At 16px the drawing
+     loses its continents, so the 32px file is what a retina tab actually
+     shows. -->
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" href="images/icons/icon-16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="images/icons/icon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="images/icons/icon-48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="images/icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="images/icons/icon-180.png">
+
+<!-- Comico (wordmark) and Author (everything else), both Indian Type Foundry
+     under the ITF Free Font License. Served from Fontshare, ITF's own CDN,
+     rather than committed here: the licence forbids making the font files
+     available through a public repository, while self-hosted serving and the
+     Fontshare API are each expressly permitted. -->
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&f%5B%5D=comico@400&display=swap">
+
 <style>
 :root{
-  --ink:#0a0a0a;
-  --paper:#f2ede3;
-  --paper-dim:#a49b8c;
-  --paper-faint:#6f6659;
-  --red:#e0392b;
-  --red-deep:#a8231a;
-  --yellow:#f5df3d;
-  --orange:#ee7f2d;
-  --rule:#2a2621;
-  --display:"Helvetica Neue",Helvetica,Arial,sans-serif;
-  --body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --paper:#FFFFFF;
+  --ink:#141A3C;          /* navy ink   16.9:1 on white */
+  --mute:#6A7192;         /* secondary text             */
+  --rule:#E4E8F5;
+
+  --blue:#1D41DF;         /* main       7.31:1 — text, links, fills */
+  --blue-deep:#1735BC;
+  --peri:#B6C4F2;
+  --peri-deep:#A4B5EE;
+  --pale:#DCE4F7;         /* fill only  */
+
+  --yellow:#FFE500;
+  --yellow-deep:#EBD400;       /* highlighter — fill only, never a text colour */
+  --warm:#DCD9CE;
+  --sky:#6389F2;          /* contact ground */
+  --sand:#F6F5F0;         /* warm ground for the registration block */
+  --band:#EDF0F8;         /* section ground, sits under the cards */
+
+  --word-space:-0.1272em;   /* 70% of Comico's 0.424em word space */
+  --wordmark:"Comico","Author",-apple-system,Helvetica,Arial,sans-serif;
+  --text:"Author",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:64px;-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:90px}
 body{
-  margin:0;background:var(--ink);color:var(--paper);
-  font-family:var(--body);font-size:17.5px;line-height:1.62;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--text);font-size:18px;font-weight:400;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
-/* screenprint grain */
-body::after{
-  content:"";position:fixed;inset:0;z-index:200;pointer-events:none;opacity:.05;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.wrap{max-width:1120px;margin:0 auto;padding:0 30px}
-a{color:var(--yellow);text-decoration:none;text-underline-offset:3px}
-a:hover{text-decoration:underline}
+.wrap{max-width:1360px;margin:0 auto;padding:0 48px}
 
-/* ---------- nav ---------- */
-nav{
-  position:sticky;top:0;z-index:60;background:var(--ink);
-  border-bottom:2px solid var(--red);
-}
-nav .wrap{display:flex;align-items:center;gap:6px;height:62px;overflow-x:auto;scrollbar-width:none}
-nav .wrap::-webkit-scrollbar{display:none}
-nav .brand{
-  font-family:var(--display);font-weight:800;font-size:14.5px;
-  text-transform:uppercase;letter-spacing:.04em;color:var(--paper);
-  margin-right:auto;white-space:nowrap;
-}
-nav a.lnk{
-  font-family:var(--display);font-size:13px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.055em;color:var(--paper-dim);white-space:nowrap;padding:7px 10px;
-}
-nav a.lnk:hover{color:var(--yellow);text-decoration:none}
-
-/* ---------- hero ---------- */
-header{padding:86px 0 78px;position:relative}
-.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
-.kicker{
-  font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--red);margin:0 0 22px;font-weight:700;
-}
+/* ---------------- hero, centred ---------------- */
+/* Scoped to the hero by id: a bare `header` selector also hit the fixed
+   masthead, which is a <header> too, and padded it to 251px tall. */
+#top{padding:88px 0 96px;text-align:center}
 h1{
-  font-family:var(--display);font-weight:800;
-  font-size:clamp(2.9rem,8vw,5.6rem);line-height:.94;
-  letter-spacing:-.035em;text-transform:uppercase;
-  margin:0 0 26px;
-  text-shadow:.055em .055em 0 var(--red);
+  font-family:var(--wordmark);font-weight:400;
+  font-size:clamp(2.9rem,9vw,6.6rem);line-height:1.02;
+  letter-spacing:-.01em;margin:0 0 34px;
+  /* Comico's word space is wide for a display line; pulled back to 70% of it.
+     The negative value is 30% of the measured space advance, not a guess. */
+  word-spacing:var(--word-space);
 }
-h1 .hl{color:var(--yellow);text-shadow:.055em .055em 0 var(--red)}
+
+/* The one word that gets the blue block.
+   Drawn on a pseudo-element behind the letters, never on the text itself, so
+   the crayon mask can eat into the block without touching the white glyphs.
+     --fill-*  the two noise layers that make it read as wax on paper:
+               a repeating mask that lets paper show through in patches, and a
+               grain layer blended into the blue for the waxy mottling.
+   line-height keeps the box hugging the capitals — Comico's own font box is
+   1.46em tall while the caps only fill 0.81em of it. */
+h1 .fill{
+  /* The blue behind the word is the supplied crayon artwork. It arrived as a
+     10.5 MB SVG that was really one PNG stored twice over; it is now the PNG
+     alone, cropped to the ink and scaled to 900px — 316 KB, still about 2x the
+     largest size it is ever drawn at. It sits on a
+     pseudo-element rather than on the text, so its bitten edge can never eat
+     into the white letters.
+     line-height hugs the capitals — Comico's own font box is 1.46em tall while
+     the caps fill only 0.814em of it. */
+  display:inline-block;position:relative;isolation:isolate;
+  color:#fff;line-height:.96;padding:.05em .17em .03em;
+  vertical-align:baseline;
+}
+h1 .fill::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:url("images/canvas-crayon-box.png") center/100% 100% no-repeat;
+}
+
 .tagline{
-  font-size:clamp(1.1rem,2.4vw,1.42rem);line-height:1.36;font-weight:500;
-  color:var(--paper);margin:0 0 30px;max-width:26ch;
+  position:relative;
+  font-size:clamp(1.45rem,3.5vw,2.3rem);line-height:1.15;font-weight:500;
+  color:var(--blue);margin:0 auto 12px;max-width:36ch;
 }
-.meta{
-  font-family:var(--mono);font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--paper-dim);margin:0 0 36px;line-height:2;
+/* The break is placed by hand, after "Imagination": leaving the preposition
+   "through" stranded at the end of a line is the worse read, and no automatic
+   break can land here because line two is the longer of the two. On narrow
+   screens the forced break is dropped so the text can wrap to fit. */
+@media (max-width:680px){
+  .tagline br{display:none}
 }
-.meta b{color:var(--paper);font-weight:700}
-.meta .sep{color:var(--red);margin:0 10px;font-weight:700}
-.cta{display:flex;flex-wrap:wrap;gap:13px}
+/* The ghost copy stays in the flow to reserve exactly the space the finished
+   line needs, so nothing shifts as the text types. It is what shows when
+   there is no JS, and is hidden the moment the typing layer takes over. */
+.tagline .ghost{visibility:visible}
+.tagline.js .ghost{visibility:hidden}
+.tagline .typed{position:absolute;left:0;right:0;top:0;display:none}
+.tagline.js .typed{display:block}
+.caret{
+  display:inline-block;width:.07em;height:.95em;
+  background:var(--peri);vertical-align:-.11em;margin-left:.07em;
+  animation:blink 1.05s steps(1,end) infinite;
+}
+/* solid while characters are still arriving, blinking once it rests */
+.tagline.typing .caret{animation:none}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* Date and venue, sitting between the tagline and the two buttons. */
+.when{
+  font-size:20px;line-height:1.4;font-weight:500;color:var(--ink);
+  margin:0 auto 34px;
+}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+/* Both labels are set at 19px/700. That is not only for weight on the page:
+   blue on peri measures 4.23:1, short of the 4.5:1 wanted for normal text, but
+   past 18.66px bold the large-text threshold of 3:1 applies and it clears
+   comfortably. Shrink these and the second button fails contrast. */
 .btn{
-  display:inline-block;font-family:var(--display);font-weight:800;font-size:14px;
-  text-transform:uppercase;letter-spacing:.07em;
-  background:var(--red);color:#fff;padding:15px 26px;border:2px solid var(--red);
+  font-family:var(--text);font-size:19px;font-weight:700;
+  letter-spacing:.045em;text-transform:uppercase;
+  padding:17px 30px;border-radius:3px;text-decoration:none;
+  background:var(--blue);color:#fff;border:1.5px solid var(--blue);
 }
-.btn:hover{background:var(--yellow);border-color:var(--yellow);color:var(--ink);text-decoration:none}
-.btn.o{background:transparent;color:var(--paper);border-color:var(--rule)}
-.btn.o:hover{background:transparent;border-color:var(--yellow);color:var(--yellow)}
+.btn:hover{background:var(--blue-deep);border-color:var(--blue-deep)}
+.btn.o{background:var(--peri);color:var(--blue);border-color:var(--peri)}
+.btn.o:hover{background:var(--peri-deep);border-color:var(--peri-deep);color:var(--blue)}
 
-/* bulb */
-.blob{
-  background:var(--red);width:100%;max-width:400px;margin:0 auto;
-  aspect-ratio:1/1;display:grid;place-items:center;
-  border-radius:57% 43% 62% 38% / 45% 58% 42% 55%;
-}
-.blob svg{width:66%;height:auto;overflow:visible}
-@media (max-width:860px){
-  .hero{grid-template-columns:1fr;gap:40px}
-  .hero .art{order:-1}
-  .blob{max-width:250px}
+/* ---- the yellow highlighter, for emphasising words in running text ---- */
+mark{
+  background:var(--yellow);color:var(--ink);
+  padding:.06em .12em;border-radius:1px;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
 }
 
-/* ---------- sections ---------- */
-section{padding:80px 0;border-top:1px solid var(--rule)}
-.snum{
-  font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px;
+/* ---------------- fixed masthead ---------------- */
+/* Stays put while the page scrolls. html scroll-padding-top is set to clear it,
+   so an anchor lands below the bar instead of under it. */
+.masthead{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:saturate(180%) blur(12px);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--rule);
 }
-h2{
-  font-family:var(--display);font-weight:800;
-  font-size:clamp(1.85rem,4.4vw,2.9rem);line-height:1.02;
-  letter-spacing:-.028em;text-transform:uppercase;margin:0 0 20px;max-width:24ch;
+.masthead .bar{
+  max-width:1360px;margin:0 auto;padding:0 48px;
+  height:72px;display:flex;align-items:center;gap:10px;
 }
-h2 .hl{color:var(--yellow)}
-.lede{color:var(--paper-dim);font-size:17px;margin:0 0 44px;max-width:60ch}
-.prose{max-width:66ch}
-.prose p{margin:0 0 20px;color:var(--paper)}
-.prose p:last-child{margin-bottom:0}
-.prose .pull{
-  font-family:var(--display);font-weight:700;font-size:clamp(1.2rem,2.6vw,1.6rem);
-  line-height:1.24;letter-spacing:-.018em;color:var(--yellow);
-  border-left:5px solid var(--red);padding-left:22px;margin:34px 0;
+.masthead .logo{margin-right:auto;display:flex;align-items:center;gap:12px;line-height:0;text-decoration:none}
+.masthead .badge{
+  font-family:var(--text);font-size:24px;font-weight:600;letter-spacing:-.008em;
+  color:var(--blue);line-height:1.2;white-space:nowrap;
+}
+.masthead .logo img{height:38px;width:auto;display:block}
+.masthead nav{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none}
+.masthead nav::-webkit-scrollbar{display:none}
+.masthead a.lnk{
+  font-family:var(--text);font-size:24px;font-weight:600;letter-spacing:-.008em;
+  color:var(--ink);text-decoration:none;white-space:nowrap;
+  padding:6px 11px;border-radius:4px;
+}
+/* Hover marks the link with a peri band the same height as the Join Us! one.
+   Sized in em so it tracks the type: .9em matches the 76% band that the Join Us!
+   gradient paints on its own shorter box. */
+.masthead a.lnk:hover,
+.masthead a.lnk:focus-visible{
+  background-image:linear-gradient(var(--peri),var(--peri));
+  background-repeat:no-repeat;
+  background-size:100% .9em;
+  background-position:center;
+}
+/* Not a button: the same nav link, marked with the highlighter. The band is
+   drawn with gradient stops rather than padding so it hugs the letters and adds
+   almost nothing to the bar's height. */
+.masthead a.join{
+  font-family:var(--text);font-size:24px;font-weight:700;white-space:nowrap;
+  color:var(--ink);text-decoration:none;margin-left:10px;
+  background:linear-gradient(transparent 12%,var(--yellow) 12%,var(--yellow) 88%,transparent 88%);
+  padding:0 5px;
+}
+.masthead a.join:hover{
+  background:linear-gradient(transparent 12%,var(--yellow-deep) 12%,var(--yellow-deep) 88%,transparent 88%);
+}
+body{padding-top:72px}
+@media (max-width:760px){
+  .masthead .bar{padding:0 22px;gap:6px;height:72px}
+  body{padding-top:72px}
+  .masthead .logo img{height:30px}
+  .masthead .badge{font-size:16px;white-space:normal;max-width:13ch;line-height:1.15}
+  .masthead a.lnk{font-size:18px;padding:6px 8px}
+  .masthead a.join{font-size:18px;margin-left:6px}
 }
 
-/* ---------- topics ---------- */
-.topics{display:grid;grid-template-columns:1fr 1fr;gap:0 60px}
-@media (max-width:860px){.topics{grid-template-columns:1fr}}
-.tp{padding:26px 0;border-top:1px solid var(--rule)}
-.tp .n{
-  font-family:var(--display);font-weight:800;font-size:2.5rem;line-height:1;
-  color:var(--red);letter-spacing:-.04em;display:block;margin-bottom:10px;
+/* ---------------- program ---------------- */
+/* A blue block, the counterpart to the grey band above it: the day is laid out
+   as white rules on blue so the schedule reads as a single object. */
+.program{background:var(--blue);color:#fff;padding:78px 0 90px}
+.program h2{
+  font-family:var(--text);font-weight:600;color:#fff;
+  font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
+  letter-spacing:-.022em;margin:0 0 34px;
 }
-.tp h3{
-  font-family:var(--display);font-weight:800;font-size:1.16rem;line-height:1.18;
-  letter-spacing:-.012em;text-transform:uppercase;margin:0 0 12px;color:var(--paper);
+.program .lede{font-size:22.5px;line-height:1.5;font-weight:500;color:#fff;margin:0 0 36px}
+.sched{max-width:1080px}
+.slot{
+  display:grid;grid-template-columns:184px 1fr;gap:30px;align-items:baseline;
+  padding:12px 0;border-top:1px solid rgba(255,255,255,.3);
 }
-.tp p{margin:0 0 12px;font-size:15.5px;line-height:1.58;color:var(--paper)}
-.tp .q{margin:0;font-size:15px;line-height:1.55;color:var(--paper-faint)}
+.slot:last-child{border-bottom:1px solid rgba(255,255,255,.3)}
+.slot .t{
+  font-size:21px;font-weight:600;color:#fff;white-space:nowrap;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+}
+.slot h3{font-size:24px;font-weight:700;letter-spacing:-.016em;line-height:1.24;margin:0;color:#fff}
+.slot .kind{
+  display:inline;font-size:19px;font-weight:500;color:var(--peri);
+  line-height:1.3;
+}
+/* speaker not yet announced */
+/* Comico for the pending speaker — caps only by design, so it reads as a
+   placeholder rather than a name. */
+.slot .tbd{
+  margin-left:16px;font-family:var(--wordmark);font-weight:400;font-size:22px;
+  color:var(--yellow);letter-spacing:.01em;white-space:nowrap;
+}
+.slot .kind::before{
+  content:"·";margin:0 12px;color:rgba(255,255,255,.5);font-weight:500;
+}
+/* Subtitles run beside the title, not beneath it, so each entry is one line and
+   the day stays compact. */
+/* breaks sit back so the working sessions carry the eye */
+.slot.brk .t,.slot.brk h3{color:var(--peri);font-weight:500}
+.slot.brk h3{font-size:21px}
+@media (max-width:700px){
+  .slot{grid-template-columns:1fr;gap:4px}
+  .slot .t{font-size:19px}
+  .slot h3{font-size:21px}
+}
 
-/* ---------- program ---------- */
-.sched{max-width:780px}
-.slot{display:grid;grid-template-columns:96px 1fr;gap:26px;padding:22px 0;border-top:1px solid var(--rule)}
-.slot:last-of-type{border-bottom:1px solid var(--rule)}
-.slot .dur{
-  font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.06em;
-  color:var(--red);padding-top:5px;white-space:nowrap;
+/* ---------------- registration ---------------- */
+/* Three columns on a warm ground, set entirely in blue: the heading sits in the
+   first column and the two steps read across, so the order of what to do is the
+   order you read in. */
+.register{background:var(--sand);color:var(--blue);padding:96px 0 104px}
+.register .cols{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;
+  align-items:start;
 }
-.slot h4{
-  font-family:var(--display);font-weight:800;font-size:1.04rem;text-transform:uppercase;
-  letter-spacing:-.005em;margin:0 0 6px;
+@media (max-width:900px){.register .cols{grid-template-columns:1fr;gap:34px}}
+.register h2{
+  font-family:var(--text);font-weight:600;color:var(--blue);
+  font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
+  letter-spacing:-.022em;margin:0;
 }
-.slot p{margin:0;font-size:15.5px;line-height:1.56;color:var(--paper-dim)}
-.slot.brk{opacity:.45}
-.slot.brk h4{font-weight:600;text-transform:none}
-.tba{
-  display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:.1em;color:var(--ink);background:var(--yellow);padding:2px 7px;
-  vertical-align:2px;text-transform:uppercase;
+/* Comico for the step markers — the wordmark face, caps only by design. */
+.register .step{
+  font-family:var(--wordmark);font-weight:400;font-size:27px;line-height:1;
+  letter-spacing:.01em;color:var(--blue);margin:0 0 16px;
 }
-.foot-note{margin-top:24px;font-size:14.5px;color:var(--paper-faint)}
+.register .facts{margin:28px 0 0}
+.register .facts > div{margin-bottom:20px}
+.register .facts > div:last-child{margin-bottom:0}
+.register dt{font-size:16px;font-weight:500;color:var(--blue);opacity:.6;margin-bottom:3px}
+.register dd{margin:0;font-size:20.5px;font-weight:700;line-height:1.3;color:var(--blue)}
+/* Comico for the pending date, as in the programme. */
+.register dd.tbd-val{font-family:var(--wordmark);font-weight:400;font-size:24px;letter-spacing:.01em}
+.register p{font-size:20.5px;line-height:1.32;font-weight:500;color:var(--blue);margin:0 0 16px}
+.register p:last-child{margin-bottom:0}
+.register a.go{
+  display:inline-block;font-size:20.5px;font-weight:700;color:var(--blue);
+  text-decoration:none;
+  background-image:linear-gradient(var(--yellow),var(--yellow));
+  background-repeat:no-repeat;background-size:100% .55em;background-position:0 88%;
+}
+.register a.go:hover{background-size:100% 1em;background-position:0 100%}
 
-/* ---------- cfp ---------- */
-.cfp{display:grid;grid-template-columns:1.3fr .7fr;gap:56px;align-items:start}
-@media (max-width:860px){.cfp{grid-template-columns:1fr;gap:38px}}
-ul.who{margin:0;padding:0;list-style:none}
-ul.who li{
-  padding:16px 0 16px 30px;border-top:1px solid var(--rule);position:relative;
-  font-size:16.5px;color:var(--paper);line-height:1.55;
+/* ---------------- contact ---------------- */
+/* Closes the page on a cornflower ground with white type, centred to bookend the
+   centred hero. #6389F2 rather than the lighter blue it is modelled on: white on
+   that measured 2.89:1, under even the 3:1 wanted for large text, and the body
+   line is set at 24px so it clears that bar too. */
+.contact{background:var(--sky);color:#fff;padding:96px 0 104px;text-align:right}
+.contact h2{
+  font-family:var(--text);font-weight:600;color:#fff;
+  font-size:clamp(2rem,4.4vw,3rem);line-height:1.1;
+  letter-spacing:-.024em;margin:0 0 18px;
 }
-ul.who li::before{content:"";position:absolute;left:0;top:26px;width:14px;height:3px;background:var(--red)}
-ul.who li b{color:var(--yellow);font-weight:700}
-.dates{border-top:3px solid var(--red);padding-top:24px}
-.dates h3{
-  font-family:var(--display);font-weight:800;font-size:.95rem;text-transform:uppercase;
-  letter-spacing:.09em;margin:0 0 20px;color:var(--red);
+.contact p{font-size:24px;line-height:1.4;font-weight:500;color:#fff;margin:0 0 34px;max-width:none}
+.contact a.mail{
+  display:inline-block;font-family:var(--text);font-weight:700;
+  font-size:clamp(1.5rem,3.2vw,2.3rem);letter-spacing:-.018em;
+  color:#fff;text-decoration:none;
+  background-image:linear-gradient(var(--yellow),var(--yellow));
+  background-repeat:no-repeat;background-size:100% .18em;background-position:0 92%;
+  transition:background-size .2s ease;
 }
-.dates .row{padding:13px 0;border-bottom:1px solid var(--rule)}
-.dates dt{
-  font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--paper-faint);margin-bottom:5px;
+.contact a.mail:hover{background-size:100% .55em}
+.contact .where{
+  margin:40px 0 0;max-width:none;font-size:18px;font-weight:500;color:#fff;opacity:.82;
 }
-.dates dd{margin:0;font-size:16px;font-weight:600}
-.dates dl{margin:0}
 
-/* ---------- organizers ---------- */
-.orgs{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:42px 26px;list-style:none;margin:0;padding:0;
+/* ---------------- organizers ---------------- */
+.organizers{padding:74px 0 100px}
+.organizers h2{
+  font-family:var(--text);font-weight:600;
+  font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
+  letter-spacing:-.022em;margin:0 0 44px;
 }
-@media (max-width:860px){.orgs{grid-template-columns:repeat(2,1fr)}}
-.orgs li{text-align:center}
+/* Two rows rather than a grid, so one can sit left and the other right. The
+   people are narrower than the container, and that slack is what makes the
+   stagger visible. */
+.people{
+  display:flex;flex-wrap:wrap;gap:30px;
+  list-style:none;margin:0;padding:0;
+}
+.people.row-a{justify-content:flex-start}
+.people.row-b{justify-content:flex-end;margin-top:44px}
+.people li{width:187px}
+@media (max-width:1100px){
+  .people li{width:calc(25% - 24px)}
+}
+@media (max-width:820px){
+  .people{justify-content:center!important;gap:26px}
+  .people li{width:calc(50% - 16px)}
+  .people.row-b{margin-top:26px}
+}
+
+.people a{
+  display:block;text-align:center;text-decoration:none;color:inherit;
+}
 .ph{
-  position:relative;width:100%;max-width:132px;margin:0 auto 15px;
+  position:relative;width:100%;margin:0 auto 16px;
   aspect-ratio:1/1;border-radius:50%;overflow:hidden;
-  background:var(--red);display:grid;place-items:center;
+  background:var(--blue);display:grid;place-items:center;
+  transition:transform .22s ease, box-shadow .22s ease;
 }
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph .ini{
-  font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:-.02em;
-  color:#fff;user-select:none;
+.ph .ini{font-family:var(--wordmark);font-weight:400;font-size:2.6rem;color:#fff}
+.people .nm{
+  position:relative;display:inline-block;
+  font-size:25px;font-weight:700;letter-spacing:-.016em;
+  line-height:1.2;margin-bottom:3px;
 }
-.orgs .nm{
-  font-family:var(--display);font-weight:800;font-size:15.5px;text-transform:uppercase;
-  letter-spacing:-.008em;margin-bottom:5px;
+/* The name keeps its ink and gains a rule drawn in under it on hover. Yellow
+   letters were the first idea and measured 1.68:1 on white — legible as a fill,
+   not as type, so the colour moved to the underline instead. */
+.people .nm::after{
+  content:"";position:absolute;left:0;right:0;bottom:-3px;height:4px;
+  background:var(--blue);border-radius:2px;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .24s cubic-bezier(.4,0,.2,1);
 }
-.orgs .af{font-size:14px;color:var(--paper-dim);line-height:1.4}
+.people a:hover .nm::after,
+.people a:focus-visible .nm::after{transform:scaleX(1)}
+.people a.alt .nm::after{background:var(--yellow)}
+/* The longer affiliations run to two lines at this size, which is fine. */
+.people .af{font-size:20px;font-weight:500;color:var(--mute);line-height:1.24}
 
-/* ---------- footer ---------- */
-footer{padding:56px 0 76px;border-top:3px solid var(--red);font-size:14.5px;color:var(--paper-faint)}
-footer p{margin:0 0 16px;max-width:64ch;line-height:1.6}
-footer .big{
-  font-family:var(--display);font-weight:800;font-size:1.05rem;text-transform:uppercase;
-  letter-spacing:-.01em;color:var(--paper);margin-bottom:14px;
+/* hover: the portrait lifts into a ring, and the underline draws in beneath the
+   name. Four ring blue, four ring yellow. */
+.people a:hover .ph,
+.people a:focus-visible .ph{transform:translateY(-6px);box-shadow:0 0 0 4px var(--blue)}
+.people a.alt:hover .ph,
+.people a.alt:focus-visible .ph{box-shadow:0 0 0 4px var(--yellow)}
+
+/* ---------------- topics ---------------- */
+/* This block is deliberately a different ground from the rest of the page: the
+   six challenges are what a visitor scans to decide whether the workshop is for
+   them, so they get their own band and sit on cards rather than running as
+   plain text. */
+.topics{background:var(--band);padding:70px 0 78px;margin:0 0 8px}
+.topics h2{
+  text-align:right;
+  font-family:var(--text);font-weight:600;
+  font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
+  letter-spacing:-.022em;margin:0 0 10px;
 }
-footer .kw{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+/* One line: the sentence measures 925px at this size, so it holds a single line
+   down to a viewport of about 1020px and folds evenly below that. */
+.topics .lede{
+  text-align:right;font-size:22.5px;line-height:1.5;font-weight:500;
+  color:var(--ink);margin:0 0 44px;max-width:none;text-wrap:balance;
+}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+
+.tp{
+  background:var(--blue);color:#fff;
+  border-radius:5px;padding:24px 24px 26px;
+  display:flex;flex-direction:column;
+}
+.tp h3{
+  position:relative;
+  font-family:var(--text);font-weight:600;font-size:24px;line-height:1.22;
+  letter-spacing:-.018em;margin:0 0 12px;color:#fff;
+  /* The numeral is taken out of the flow and the first line indented past it,
+     so a title that runs to a second line gets the whole card width back
+     instead of staying in a narrow column beside the number.
+     The numeral sits in a fixed left gutter and is centred on the whole title,
+     one line or two; the gutter is padding rather than a first-line indent so a
+     second line cannot run back underneath the number.
+     Break points are pinned with non-breaking spaces so each title folds at a
+     phrase rather than wherever the box ends. Title 6 sets the ceiling: at this
+     card width 24px still leaves slack, 25px sits flush to the edge. */
+  padding-left:50px;
+}
+.tp h3 .num{
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  font-family:var(--wordmark);font-weight:400;font-size:46px;line-height:1;
+  color:var(--yellow);
+}
+.tp p{margin:0;font-size:22.5px;line-height:1.32;font-weight:500;color:var(--pale)}
+
+/* ---------------- overview ---------------- */
+.overview{padding:0 0 90px}
+.overview .wrap{padding-top:46px}
+.overview h2{
+  font-family:var(--text);font-weight:600;
+  font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
+  letter-spacing:-.022em;margin:0 0 24px;
+}
+/* 70ch lands at about 73 characters a line — the top of the comfortable
+   45-75 band. Wider looks better against the full-width rule but starts
+   costing the reader the return sweep to the next line. */
+.overview strong{font-weight:700}
+.overview p{max-width:78ch;margin:0 0 18px;font-size:22.5px;line-height:1.56;font-weight:500}
+.overview a{color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:2px}
 
 @media (max-width:620px){
-  body{font-size:16.5px}
   .wrap{padding:0 22px}
-  header{padding:52px 0 58px}
-  section{padding:58px 0}
-  .slot{grid-template-columns:1fr;gap:8px}
-  .slot .dur{padding-top:0}
-  .topics{gap:0}
+  #top{padding:54px 0 62px}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <span class="brand">The World as a Canvas</span>
-    <a class="lnk" href="#about">About</a>
-    <a class="lnk" href="#topics">Topics</a>
-    <a class="lnk" href="#program">Program</a>
-    <a class="lnk" href="#cfp">Participate</a>
-    <a class="lnk" href="#organizers">Organizers</a>
+<header class="masthead">
+  <div class="bar">
+    <a class="logo" href="#top" aria-label="The World as a Canvas — top of page">
+      <img src="images/logo.png" alt="The World as a Canvas">
+      <span class="badge">UIST&nbsp;'26 Full Day Workshop</span>
+    </a>
+    <nav>
+      <a class="lnk" href="#overview">Overview</a>
+      <a class="lnk" href="#scope">Scope</a>
+      <a class="lnk" href="#organizers">Organizers</a>
+      <a class="lnk" href="#program">Program</a>
+      <a class="lnk" href="https://web.cvent.com/event/c258aabd-a362-447f-a75c-0f191c0b13b1/summary" target="_blank" rel="noopener">UIST&nbsp;'26</a>
+    </nav>
+    <a class="join" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Join Us!</a>
   </div>
-</nav>
+</header>
 
-<header>
-  <div class="wrap hero">
-    <div>
-      <p class="kicker">UIST '26 Workshop · Detroit</p>
-      <h1>The World<br>as a <span class="hl">Canvas</span></h1>
-      <p class="tagline">Materializing Imagination through Prompting the Physical World</p>
-      <p class="meta">
-        <b>November 2, 2026</b><span class="sep">/</span><b>Detroit, MI</b><br>
-        Full day, in person<span class="sep">/</span>25–35 participants
-      </p>
-      <div class="cta">
-        <a class="btn" href="#cfp">Call for Participation</a>
-        <a class="btn o" href="https://uist.acm.org/2026/" target="_blank" rel="noopener">UIST 2026 ↗</a>
-      </div>
-    </div>
-    <div class="art">
-      <div class="blob">
-        <svg viewBox="0 0 400 400" aria-hidden="true">
-          <defs>
-            <radialGradient id="glow" cx="50%" cy="40%" r="55%">
-              <stop offset="0%" stop-color="#f8b64c" stop-opacity=".9"/>
-              <stop offset="45%" stop-color="#ee7f2d" stop-opacity=".6"/>
-              <stop offset="100%" stop-color="#ee7f2d" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <circle cx="200" cy="160" r="190" fill="url(#glow)"/>
-          <path d="M200 45C140 45 96 92 96 148c0 38 20 60 36 80 12 15 18 28 20 42h96c2-14 8-27 20-42 16-20 36-42 36-80 0-56-44-103-104-103z"
-                fill="#f5df3d" stroke="#0a0a0a" stroke-width="10" stroke-linejoin="round"/>
-          <g fill="none" stroke="#0a0a0a" stroke-width="9" stroke-linecap="round">
-            <path d="M168 258V192"/>
-            <path d="M232 258V192"/>
-            <path d="M168 192l16-26 16 26 16-26 16 26"/>
-          </g>
-          <g stroke="#0a0a0a" stroke-width="7" fill="#141414">
-            <rect x="152" y="272" width="96" height="24" rx="9"/>
-            <rect x="157" y="300" width="86" height="22" rx="9"/>
-            <rect x="164" y="326" width="72" height="22" rx="9"/>
-            <path d="M180 352h40l-9 24h-22z"/>
-          </g>
-          <g stroke="#8fd8dc" stroke-width="4" stroke-linecap="round" opacity=".85">
-            <path d="M164 284h30"/><path d="M169 311h26"/><path d="M176 337h22"/>
-          </g>
-        </svg>
-      </div>
+<header id="top">
+  <div class="wrap">
+    <h1>The World<br>as a <span class="fill">Canvas</span></h1>
+    <p class="tagline">
+      <span class="ghost">Materializing Imagination<br>through Prompting the Physical World</span>
+      <span class="typed" aria-hidden="true"><span class="chars"></span><span class="caret"></span></span>
+      <span class="sr-only">Materializing Imagination through Prompting the Physical World</span>
+    </p>
+    <p class="when">November 2, 2026 &nbsp;·&nbsp; Detroit Marriott at the Renaissance Center</p>
+    <div class="cta">
+      <a class="btn" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Call for Participation</a>
+      <a class="btn o" href="the-world-as-a-canvas-uist26-workshop.pdf">Workshop Proposal</a>
     </div>
   </div>
 </header>
 
-<section id="about">
+<section class="overview" id="overview">
   <div class="wrap">
-    <span class="snum">01 / About</span>
-    <h2>Generative AI builds a world in minutes. <span class="hl">Why not an XR world?</span></h2>
-    <div class="prose">
-      <p>This workshop brings together researchers and practitioners in HCI, eXtended Reality (XR), and AI to explore how generative AI can lower barriers to creating XR experiences. Generative AI can now turn rough ideas into images, videos, and apps within minutes, yet creating XR experiences remains demanding.</p>
-      <p class="pull">XR creations must be grounded in physical space, previewed before they exist, steered through multimodal input, co-created across heterogeneous devices, inspected for errors that unfold in interaction, and shared beyond a single headset.</p>
-      <p>Through keynotes, posters and demos, and hands-on prototyping activities, we will explore these challenges, derive design considerations, and distill a shared research agenda. The outcomes will be published on this website and seed a growing community advancing how generative AI-powered XR can support everyday creativity.</p>
-    </div>
+    <h2>Workshop Overview</h2>
+    <p>This workshop explores how <mark>generative AI</mark> can reshape the way people
+    <mark>create in XR</mark>. While generative AI is rapidly lowering barriers to creation, XR
+    introduces fundamentally different challenges as creation moves beyond flat screens into the
+    physical world. XR experiences must account for real spaces, embodied and multimodal
+    interaction, collaboration across heterogeneous devices, and content that unfolds through
+    space and time. These characteristics raise new questions about how creators express intent,
+    preview and refine imagined outcomes, evaluate generated content, and share or transform what
+    they create. <strong>The World as a Canvas</strong> brings together researchers and
+    practitioners to examine these emerging challenges and develop a shared vision for more
+    accessible, expressive, and collaborative XR creation.</p>
   </div>
 </section>
 
-<section id="topics">
+<section class="topics" id="scope">
   <div class="wrap">
-    <span class="snum">02 / Scope</span>
-    <h2>Six challenges we work through</h2>
-    <p class="lede">Each theme frames open questions that we refine together and carry into the afternoon prototyping session.</p>
-    <div class="topics">
-
+    <h2>Six Challenges</h2>
+    <p class="lede">Each one frames open questions we will refine together and carry into the
+    afternoon prototyping session.</p>
+    <div class="grid">
       <div class="tp">
-        <span class="n">01</span>
-        <h3>In-situ Creation within Physical Space</h3>
-        <p>In-situ XR creation must account for the user's physical surroundings, from coarse properties such as lighting, scale, and object categories down to finer ones such as material and weight.</p>
-        <p class="q">How can generative models produce content and behaviors that stay physically plausible? What limits how finely creators can author such interactions — sensing, representations, or generative pipelines?</p>
+        <h3><span class="num">1</span><span>In-situ Creation within&nbsp;Physical&nbsp;Space</span></h3>
+        <p>How can generative AI create content and behaviors that fit the user’s physical surroundings, from lighting and scale to material and weight?</p>
       </div>
-
       <div class="tp">
-        <span class="n">02</span>
-        <h3>Previsualization and Mental Imagery</h3>
-        <p>At the outset, creators picture the result and mentally project it onto their space, yet people differ greatly in how vividly they can do this.</p>
-        <p class="q">How much should tools previsualize to support imagination without anchoring creators, and in what form? Beyond showing outcomes, how can previews help creators develop their own mental imagery?</p>
+        <h3><span class="num">2</span><span>Previsualization and Mental&nbsp;Imagery</span></h3>
+        <p>How can tools help creators preview imagined outcomes without constraining their own mental imagery?</p>
       </div>
-
       <div class="tp">
-        <span class="n">03</span>
-        <h3>Expressing and Interpreting Creative Intent</h3>
-        <p>In XR, creators speak with more than words; gesture, gaze, facial expression, and movement all carry meaning.</p>
-        <p class="q">What creative intent do people convey through these signals, and how should generative AI interpret it? How can creators and AI negotiate ambiguous intent and refine a creation through iteration?</p>
+        <h3><span class="num">3</span><span>Expressing and Interpreting Creative&nbsp;Intent</span></h3>
+        <p>How should generative AI interpret creative intent expressed through gesture, gaze, movement, and other signals beyond words?</p>
       </div>
-
       <div class="tp">
-        <span class="n">04</span>
-        <h3>Co-Creation across Hardware Heterogeneity</h3>
-        <p>Collaborators rarely hold identical devices; one may wear a headset while another joins from a tablet or phone.</p>
-        <p class="q">How can generative AI adapt content and interactions across devices to maintain coherent co-creation when input, display, and compute vary widely? What roles suit each device?</p>
+        <h3><span class="num">4</span><span>Co-Creation across Hardware&nbsp;Heterogeneity</span></h3>
+        <p>How can people co-create seamlessly across headsets, tablets, and phones with different input, display, and compute capabilities?</p>
       </div>
-
       <div class="tp">
-        <span class="n">05</span>
-        <h3>Evaluating Generated Content</h3>
-        <p>Generative AI inevitably makes mistakes, and in XR such errors are especially hard to inspect and repair — they may surface only through interaction, across viewpoints, and over time.</p>
-        <p class="q">How can interfaces help creators detect errors and evaluate quality? At which stage of a pipeline should errors be caught, and how can that be made transparent?</p>
+        <h3><span class="num">5</span><span>Evaluating Generated Content</span></h3>
+        <p>How can creators detect and correct generative errors that emerge through interaction, across viewpoints, or over time?</p>
       </div>
-
       <div class="tp">
-        <span class="n">06</span>
-        <h3>Cross-Media Creation, Transformation, and Provenance</h3>
-        <p>Existing images, videos, stories, and objects can become interactive XR experiences, while XR creations can be translated into videos or physical artifacts.</p>
-        <p class="q">What should be preserved, transformed, or newly generated in such translations? As content is remixed, how can provenance, attribution, and ownership remain traceable?</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section id="program">
-  <div class="wrap">
-    <span class="snum">03 / Program</span>
-    <h2>A day built around making things</h2>
-    <div class="sched">
-
-      <div class="slot">
-        <span class="dur">45 min</span>
-        <div>
-          <h4>Opening and Speed Introductions</h4>
-          <p>Organizers welcome participants and outline the day's goals. Seated in two facing rows, participants introduce themselves one-on-one for two minutes, then rotate to a new partner using a pre-collected introduction slide and ice-breaking prompts.</p>
-        </div>
-      </div>
-
-      <div class="slot">
-        <span class="dur">45 min</span>
-        <div>
-          <h4>Keynote I &nbsp;<span class="tba">Speaker TBA</span></h4>
-          <p>A 30-minute talk followed by 15 minutes of Q&amp;A. Across the two keynotes we invite speakers representing academia and industry to share their perspectives on XR and generative AI for authoring interactive experiences.</p>
-        </div>
-      </div>
-
-      <div class="slot">
-        <span class="dur">75 min</span>
-        <div>
-          <h4>Poster and Demo Session</h4>
-          <p>Posters and demos selected through the call for participation are set up as stations around the room, where participants try the systems firsthand and talk with their presenters. Each participant carries a short passport to note challenges they encounter and ideas the systems inspire.</p>
-        </div>
-      </div>
-
-      <div class="slot brk">
-        <span class="dur">—</span>
-        <div><h4>Lunch break</h4></div>
-      </div>
-
-      <div class="slot">
-        <span class="dur">45 min</span>
-        <div>
-          <h4>Keynote II &nbsp;<span class="tba">Speaker TBA</span></h4>
-          <p>A second 30-minute talk with 15 minutes of Q&amp;A, establishing shared context for the afternoon's hands-on work.</p>
-        </div>
-      </div>
-
-      <div class="slot">
-        <span class="dur">30 min</span>
-        <div>
-          <h4>Group Discussion</h4>
-          <p>Organizers lay out challenge buckets drawn from the workshop scope, and participants form teams around the topics they find most compelling. Drawing on the keynotes, demos, and their passport notes, each team defines one concrete problem to address.</p>
-        </div>
-      </div>
-
-      <div class="slot">
-        <span class="dur">45 min</span>
-        <div>
-          <h4>Low-Fidelity Prototyping</h4>
-          <p>Each team develops its challenge into a low-fidelity prototype. To enable rapid XR prototyping within limited time, we provide disposable clear face shields as stand-ins for optical see-through displays. Participants draw visual cues directly on the shields and use sketches and sticky notes to represent other modalities such as haptics and audio.</p>
-        </div>
-      </div>
-
-      <div class="slot">
-        <span class="dur">45 min</span>
-        <div>
-          <h4>Closing and Next Steps</h4>
-          <p>Each team gives a five-minute presentation on its outcomes. Organizers summarize the day, outline the post-workshop plan, and invite participants to a persistent community channel.</p>
-        </div>
-      </div>
-
-      <p class="foot-note">The order above is tentative and exact clock times will be announced closer to the event.</p>
-    </div>
-  </div>
-</section>
-
-<section id="cfp">
-  <div class="wrap">
-    <span class="snum">04 / Call for Participation</span>
-    <h2>Bring a demo, <span class="hl">however early</span></h2>
-    <div class="cfp">
-      <ul class="who">
-        <li>We invite <b>researchers, designers, and practitioners</b> working on XR authoring, generative AI, and creativity support.</li>
-        <li>We equally welcome those <b>applying these technologies in practice</b> — in education, industrial design, and remote collaboration.</li>
-        <li><b>Interactive demos are especially welcome</b>, whether polished or early-stage, across the full XR spectrum.</li>
-        <li>If you would like to present a demo, please <b>describe your setup and equipment needs</b> so we can coordinate with the venue.</li>
-      </ul>
-      <div class="dates">
-        <h3>Key dates</h3>
-        <dl>
-          <div class="row"><dt>Submission deadline</dt><dd><span class="tba">TBA</span></dd></div>
-          <div class="row"><dt>Notification</dt><dd><span class="tba">TBA</span></dd></div>
-          <div class="row"><dt>Workshop day</dt><dd>November 2, 2026</dd></div>
-          <div class="row"><dt>How to submit</dt><dd><span class="tba">TBA</span></dd></div>
-          <div class="row"><dt>Questions</dt><dd><a href="mailto:hyuna.seo@hcs.snu.ac.kr?subject=The%20World%20as%20a%20Canvas%20(UIST%20'26%20Workshop)">Contact us</a></dd></div>
-        </dl>
+        <h3><span class="num">6</span><span>Cross-Media Creation, Transformation,&nbsp;and&nbsp;Provenance</span></h3>
+        <p>As creations move across images, videos, XR, and physical artifacts, what should be preserved, and how can their provenance and ownership remain traceable?</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="organizers">
+<section class="organizers" id="organizers">
   <div class="wrap">
-    <span class="snum">05 / Organizers</span>
     <h2>Organizers</h2>
-    <!-- Photos: drop files into images/organizers/ (see the README there).
-         Each <img> falls back to the initials circle until a file exists. -->
-    <ul class="orgs">
+    <ul class="people row-a">
       <li>
-        <div class="ph"><img src="images/organizers/hyuna-seo.jpg" alt="HyunA Seo" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">HS</span></div>
-        <div class="nm">HyunA Seo</div><div class="af">Seoul National University</div>
+        <a href="https://hyunaseo.github.io/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/HyunA.jpg" alt="HyunA Seo" onerror="this.remove()"><span class="ini">HS</span></div>
+          <div class="nm">HyunA Seo</div><div class="af">Seoul National University</div>
+        </a>
       </li>
       <li>
-        <div class="ph"><img src="images/organizers/nels-numan.jpg" alt="Nels Numan" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">NN</span></div>
-        <div class="nm">Nels Numan</div><div class="af">Google</div>
+        <a class="alt" href="https://nels.dev/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/Nels.jpg" alt="Nels Numan" onerror="this.remove()"><span class="ini">NN</span></div>
+          <div class="nm">Nels Numan</div><div class="af">Google</div>
+        </a>
       </li>
       <li>
-        <div class="ph"><img src="images/organizers/hye-young-jo.jpg" alt="Hye-Young Jo" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">HJ</span></div>
-        <div class="nm">Hye-Young Jo</div><div class="af">University of Colorado Boulder</div>
+        <a href="https://hyeyoungjo.com/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/Hyeyoung.webp" alt="Hye-Young Jo" onerror="this.remove()"><span class="ini">HJ</span></div>
+          <div class="nm">Hye-Young Jo</div><div class="af">University of Colorado Boulder</div>
+        </a>
       </li>
       <li>
-        <div class="ph"><img src="images/organizers/jaewook-lee.jpg" alt="Jaewook Lee" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">JL</span></div>
-        <div class="nm">Jaewook Lee</div><div class="af">University of Washington</div>
+        <a class="alt" href="https://jaewook-lee.com/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/Jae.jpg" alt="Jaewook Lee" onerror="this.remove()"><span class="ini">JL</span></div>
+          <div class="nm">Jaewook Lee</div><div class="af">University of Washington</div>
+        </a>
+      </li>
+    </ul>
+    <ul class="people row-b">
+      <li>
+        <a class="alt" href="https://jonfroehlich.github.io/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/Jon.jpg" alt="Jon E. Froehlich" onerror="this.remove()"><span class="ini">JF</span></div>
+          <div class="nm">Jon E. Froehlich</div><div class="af">University of Washington</div>
+        </a>
       </li>
       <li>
-        <div class="ph"><img src="images/organizers/jon-froehlich.jpg" alt="Jon E. Froehlich" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">JF</span></div>
-        <div class="nm">Jon E. Froehlich</div><div class="af">University of Washington</div>
+        <a href="https://duruofei.com/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/Ruofei.jpg" alt="Ruofei Du" onerror="this.remove()"><span class="ini">RD</span></div>
+          <div class="nm">Ruofei Du</div><div class="af">Google XR</div>
+        </a>
       </li>
       <li>
-        <div class="ph"><img src="images/organizers/ruofei-du.jpg" alt="Ruofei Du" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">RD</span></div>
-        <div class="nm">Ruofei Du</div><div class="af">Google XR</div>
+        <a class="alt" href="https://ryosuzuki.org/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/RyoSuzuki.avif" alt="Ryo Suzuki" onerror="this.remove()"><span class="ini">RS</span></div>
+          <div class="nm">Ryo Suzuki</div><div class="af">University of Colorado Boulder</div>
+        </a>
       </li>
       <li>
-        <div class="ph"><img src="images/organizers/ryo-suzuki.jpg" alt="Ryo Suzuki" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">RS</span></div>
-        <div class="nm">Ryo Suzuki</div><div class="af">University of Colorado Boulder</div>
-      </li>
-      <li>
-        <div class="ph"><img src="images/organizers/youngki-lee.jpg" alt="Youngki Lee" onerror="if(this.dataset.p){this.remove()}else{this.dataset.p=1;this.src=this.src.replace(/\.jpg$/,'.png')}"><span class="ini">YL</span></div>
-        <div class="nm">Youngki Lee</div><div class="af">Seoul National University</div>
+        <a href="https://youngkilee.blogspot.com/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/organizers/Youngki.jpeg" alt="Youngki Lee" onerror="this.remove()"><span class="ini">YL</span></div>
+          <div class="nm">Youngki Lee</div><div class="af">Seoul National University</div>
+        </a>
       </li>
     </ul>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <p class="big">The World as a Canvas</p>
-    <p>A workshop at the 39th Annual ACM Symposium on User Interface Software and Technology (UIST '26), November 2, 2026, Detroit, MI, USA. &nbsp;<a href="mailto:hyuna.seo@hcs.snu.ac.kr?subject=The%20World%20as%20a%20Canvas%20(UIST%20'26%20Workshop)">Contact us</a></p>
-    <p class="kw">Extended Reality / Generative AI / Creativity Support Tools / XR Authoring</p>
-    <p style="margin-top:22px">Supported by the National Research Foundation of Korea (NRF) grant funded by the Korean government (MSIT) (No. RS-2024-00463802), JST PRESTO Grant Number JPMJPR23I5, and NSF CAREER Award IIS-2543251.</p>
-  </div>
-</footer>
 
+<section class="program" id="program">
+  <div class="wrap">
+    <h2>Program</h2>
+    <div class="sched">
+      <div class="slot">
+        <div class="t">09:00 – 09:45</div>
+        <div><h3>Opening &amp; Speed Introduction</h3></div>
+      </div>
+      <div class="slot">
+        <div class="t">09:45 – 10:30</div>
+        <div><h3>Keynote I — Academic Perspective<span class="tbd">Speaker TBD</span></h3></div>
+      </div>
+      <div class="slot brk">
+        <div class="t">10:30 – 11:00</div>
+        <div><h3>Coffee Break</h3></div>
+      </div>
+      <div class="slot">
+        <div class="t">11:00 – 12:15</div>
+        <div><h3>Poster &amp; Demo Session</h3></div>
+      </div>
+      <div class="slot brk">
+        <div class="t">12:15 – 13:45</div>
+        <div><h3>Lunch</h3></div>
+      </div>
+      <div class="slot">
+        <div class="t">13:45 – 14:30</div>
+        <div><h3>Keynote II — Industry Perspective<span class="tbd">Speaker TBD</span></h3></div>
+      </div>
+      <div class="slot">
+        <div class="t">14:30 – 15:00</div>
+        <div><h3>Group Activity I — Where XR Creation Breaks Down</h3></div>
+      </div>
+      <div class="slot brk">
+        <div class="t">15:00 – 15:30</div>
+        <div><h3>Coffee Break</h3></div>
+      </div>
+      <div class="slot">
+        <div class="t">15:30 – 16:15</div>
+        <div><h3>Group Activity II — Prototyping on the Shield</h3></div>
+      </div>
+      <div class="slot">
+        <div class="t">16:15 – 17:00</div>
+        <div><h3>Closing</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="register" id="register">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>Registration</h2>
+        <dl class="facts">
+          <div>
+            <dt>Sign-up deadline</dt>
+            <dd>Until 35 seats fill</dd>
+          </div>
+          <div>
+            <dt>Notification</dt>
+            <dd class="tbd-val">TBD</dd>
+          </div>
+        </dl>
+      </div>
+      <div>
+        <p class="step">Step 1</p>
+        <p>Register for UIST '26 and <strong>select this workshop</strong>, or add it to an
+        existing registration at any time.</p>
+        <p><a class="go" href="https://web.cvent.com/event/c258aabd-a362-447f-a75c-0f191c0b13b1/summary" target="_blank" rel="noopener">Register for UIST '26 &nearr;</a></p>
+      </div>
+      <div>
+        <p class="step">Step 2</p>
+        <p>A short form collects what you work on, so we can shape the day around the people
+        in the room. <strong>It is also where you propose a poster or a demo. Polished or
+        early-stage, both are welcome.</strong></p>
+        <p><a class="go" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Open the form &nearr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Contact Us</h2>
+    <p>Anything you would like to know about the workshop, just ask.</p>
+    <!-- The address is assembled by script from the parts below, so it never
+         appears in the served HTML for a harvester to pick up. -->
+    <p><a class="mail" id="contact-mail"
+          data-u="hyuna.seo" data-d="hcs.snu.ac.kr" href="#contact">Email the organizers &nearr;</a></p>
+    <noscript><p class="where">hyuna.seo [at] hcs.snu.ac.kr</p></noscript>
+    <p class="where">UIST '26 &nbsp;November 2, 2026 &nbsp;·&nbsp; Detroit, MI</p>
+  </div>
+</section>
+
+
+
+
+
+<script>
+/* Types the tagline out on first load, with a caret that holds solid while
+   characters arrive and blinks once it rests. The full text is always in the
+   DOM: a screen reader gets it from .sr-only, and with JS off or reduced
+   motion requested the plain .ghost copy is simply left visible. */
+(function(){
+  var p = document.querySelector('.tagline');
+  if(!p) return;
+  var ghost = p.querySelector('.ghost'),
+      out   = p.querySelector('.chars');
+  if(!ghost || !out) return;
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Read the ghost's own line structure so the two stay in lockstep: its <br>
+     becomes a newline here, and is turned back into a <br> as we type. */
+  var full = '', i = 0;
+  [].forEach.call(ghost.childNodes, function(n){
+    full += (n.nodeName === 'BR') ? '\n' : n.textContent;
+  });
+  p.classList.add('js', 'typing');
+
+  function render(n){
+    var parts = full.slice(0, n).split('\n');
+    out.textContent = '';
+    parts.forEach(function(part, k){
+      if(k) out.appendChild(document.createElement('br'));
+      out.appendChild(document.createTextNode(part));
+    });
+  }
+
+  function step(){
+    render(++i);
+    if(i < full.length){
+      /* slight jitter so it reads as typing rather than a metronome */
+      setTimeout(step, 24 + Math.random() * 34);
+    } else {
+      p.classList.remove('typing');
+    }
+  }
+  function start(){ setTimeout(step, 340); }
+
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(start); }
+  else { start(); }
+})();
+</script>
+<script>
+/* Builds the contact mailto at runtime from its two halves. */
+(function(){
+  var a = document.getElementById('contact-mail');
+  if(!a) return;
+  var addr = a.dataset.u + String.fromCharCode(64) + a.dataset.d;
+  a.href = 'mailto:' + addr + "?subject=" +
+           encodeURIComponent("The World as a Canvas (UIST '26 Workshop)");
+})();
+</script>
 </body>
 </html>
