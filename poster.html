@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World as a Canvas — Poster</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&f%5B%5D=comico@400&display=swap">
+<style>
+/* ============================================================
+   One-page poster, A4 portrait. Print it or export to PDF:
+   Cmd-P, paper A4, margins None, and leave "Print backgrounds"
+   on so the blue and the crayon block come through.
+   ============================================================ */
+:root{
+  --ink:#141A3C; --mute:#6A7192; --rule:#E4E8F5;
+  --blue:#1D41DF; --peri:#B6C4F2; --pale:#DCE4F7;
+  --yellow:#FFE500; --sand:#F6F5F0;
+  --wordmark:"Comico","Author",Helvetica,Arial,sans-serif;
+  --text:"Author",-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+@page{size:A4 portrait;margin:0}
+html,body{margin:0;padding:0;background:#e9e9ec}
+body{
+  font-family:var(--text);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+.sheet{
+  width:210mm;height:297mm;margin:10mm auto;background:#fff;
+  padding:15mm 16mm 13mm;display:flex;flex-direction:column;
+  box-shadow:0 2mm 8mm rgba(20,26,60,.18);overflow:hidden;
+}
+
+/* ---- masthead ---- */
+.top{display:flex;align-items:center;gap:3.5mm;padding-bottom:5mm;border-bottom:.4mm solid var(--blue)}
+.top img{height:11mm;width:auto;display:block}
+.top .who{font-size:11.5pt;font-weight:600;color:var(--blue);letter-spacing:-.01em;line-height:1.15}
+.top .venue{margin-left:auto;text-align:right;font-size:9.5pt;font-weight:500;color:var(--mute);line-height:1.3}
+
+/* ---- wordmark ---- */
+h1{
+  font-family:var(--wordmark);font-weight:400;font-size:47pt;line-height:1.0;
+  letter-spacing:-.01em;word-spacing:-.1272em;margin:9mm 0 5mm;
+}
+h1 .fill{
+  display:inline-block;position:relative;isolation:isolate;
+  color:#fff;line-height:.96;padding:.04em .16em .02em;vertical-align:baseline;
+}
+h1 .fill::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:url("images/canvas-crayon-box.png") center/100% 100% no-repeat;
+}
+.sub{font-size:16pt;line-height:1.2;font-weight:500;color:var(--blue);margin:0 0 3mm}
+.when{font-size:11.5pt;font-weight:600;color:var(--ink);margin:0}
+
+/* ---- description ---- */
+.about{margin:7mm 0 0;padding-top:6mm;border-top:.3mm solid var(--rule)}
+.about p{font-size:11pt;line-height:1.42;font-weight:500;margin:0}
+mark{background:var(--yellow);color:var(--ink);padding:0 .1em}
+
+
+/* ---- scope ---- */
+.scope{margin-top:7mm;padding-top:6mm;border-top:.3mm solid var(--rule)}
+.scope h2{
+  font-size:12pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 4mm;
+}
+.scope ol{
+  display:grid;grid-template-columns:1fr 1fr;gap:2.6mm 7mm;
+  list-style:none;margin:0;padding:0;counter-reset:c;
+}
+.scope li{
+  display:flex;gap:2.6mm;align-items:baseline;
+  font-size:10.5pt;font-weight:600;line-height:1.2;
+}
+.scope li::before{
+  counter-increment:c;content:counter(c);
+  font-family:var(--wordmark);font-size:13pt;color:var(--blue);
+  min-width:4mm;flex:0 0 auto;
+}
+
+/* ---- organizers ---- */
+.people-wrap{margin-top:7mm;padding-top:6mm;border-top:.3mm solid var(--rule)}
+.people-wrap h2{
+  font-size:12pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 5mm;
+}
+ul.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm 5mm;list-style:none;margin:0;padding:0}
+ul.people li{text-align:center}
+.ph{
+  position:relative;width:26mm;height:26mm;margin:0 auto 2.5mm;
+  border-radius:50%;overflow:hidden;background:var(--blue);
+  display:grid;place-items:center;
+}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .ini{font-family:var(--wordmark);font-size:14pt;color:#fff}
+.nm{font-size:10.5pt;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin-bottom:.8mm}
+.af{font-size:9pt;font-weight:500;color:var(--mute);line-height:1.18}
+
+/* ---- footer ---- */
+.foot{
+  margin-top:auto;padding-top:6mm;border-top:.4mm solid var(--blue);
+  display:flex;align-items:flex-end;gap:6mm;
+}
+.foot .url{
+  font-family:var(--wordmark);font-size:21pt;line-height:1;color:var(--ink);
+  background-image:linear-gradient(var(--yellow),var(--yellow));
+  background-repeat:no-repeat;background-size:100% .3em;background-position:0 88%;
+}
+.foot .join{margin-left:auto;text-align:right;font-size:10pt;font-weight:500;color:var(--mute);line-height:1.35}
+.foot .join b{color:var(--ink);font-weight:700}
+
+@media print{
+  html,body{background:#fff}
+  .sheet{margin:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <img src="images/logo.png" alt="">
+    <div class="who">UIST&nbsp;'26<br>Full Day Workshop</div>
+    <div class="venue">November 2, 2026<br>Detroit Marriott at the Renaissance Center</div>
+  </div>
+
+  <h1>The World<br>as a <span class="fill">Canvas</span></h1>
+  <p class="sub">Materializing Imagination through Prompting the Physical World</p>
+
+  <div class="about">
+    <p><mark>Generative AI</mark> is rapidly lowering the barriers to creation, yet XR
+    introduces fundamentally different challenges as creation moves beyond flat screens into
+    the physical world. XR experiences must account for real spaces, embodied and multimodal
+    interaction, collaboration across heterogeneous devices, and content that unfolds through
+    space and time. This workshop brings together researchers and practitioners to examine
+    these challenges and develop a shared vision for more
+    <mark>accessible, expressive, and collaborative XR creation</mark>.</p>
+  </div>
+
+  <div class="scope">
+    <h2>Six Challenges</h2>
+    <ol>
+      <li>In-situ Creation within Physical Space</li>
+      <li>Co-Creation across Hardware Heterogeneity</li>
+      <li>Previsualization and Mental Imagery</li>
+      <li>Evaluating Generated Content</li>
+      <li>Expressing and Interpreting Creative Intent</li>
+      <li>Cross-Media Creation, Transformation, and Provenance</li>
+    </ol>
+  </div>
+
+  <div class="people-wrap">
+    <h2>Organizers</h2>
+    <ul class="people">
+      <li><div class="ph"><img src="images/organizers/HyunA.jpg" alt="" onerror="this.remove()"><span class="ini">HS</span></div>
+        <div class="nm">HyunA Seo</div><div class="af">Seoul National University</div></li>
+      <li><div class="ph"><img src="images/organizers/Nels.jpg" alt="" onerror="this.remove()"><span class="ini">NN</span></div>
+        <div class="nm">Nels Numan</div><div class="af">Google</div></li>
+      <li><div class="ph"><img src="images/organizers/Hyeyoung.webp" alt="" onerror="this.remove()"><span class="ini">HJ</span></div>
+        <div class="nm">Hye-Young Jo</div><div class="af">University of Colorado Boulder</div></li>
+      <li><div class="ph"><img src="images/organizers/Jae.jpg" alt="" onerror="this.remove()"><span class="ini">JL</span></div>
+        <div class="nm">Jaewook Lee</div><div class="af">University of Washington</div></li>
+      <li><div class="ph"><img src="images/organizers/Jon.jpg" alt="" onerror="this.remove()"><span class="ini">JF</span></div>
+        <div class="nm">Jon E. Froehlich</div><div class="af">University of Washington</div></li>
+      <li><div class="ph"><img src="images/organizers/Ruofei.jpg" alt="" onerror="this.remove()"><span class="ini">RD</span></div>
+        <div class="nm">Ruofei Du</div><div class="af">Google XR</div></li>
+      <li><div class="ph"><img src="images/organizers/RyoSuzuki.avif" alt="" onerror="this.remove()"><span class="ini">RS</span></div>
+        <div class="nm">Ryo Suzuki</div><div class="af">University of Colorado Boulder</div></li>
+      <li><div class="ph"><img src="images/organizers/Youngki.jpeg" alt="" onerror="this.remove()"><span class="ini">YL</span></div>
+        <div class="nm">Youngki Lee</div><div class="af">Seoul National University</div></li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span class="url">worldascanvas.github.io</span>
+    <div class="join"><b>Join us</b><br>Register through UIST&nbsp;'26 and select this workshop</div>
+  </div>
+
+</div>
+</body>
+</html>

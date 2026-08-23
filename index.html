@@ -103,7 +103,10 @@ h1 .fill::before{
   font-size:clamp(1.45rem,3.5vw,2.3rem);line-height:1.15;font-weight:500;
   color:var(--blue);margin:0 auto 12px;max-width:36ch;
 }
-/* The break is placed by hand, after "Imagination": leaving the preposition
+/* The break is placed by hand, after "Imagination". Note the space kept before
+   the <br>: on a narrow screen the <br> is hidden, and without that space the
+   two words ran together as "Imaginationthrough".
+   Leaving the preposition
    "through" stranded at the end of a line is the worse read, and no automatic
    break can land here because line two is the longer of the two. On narrow
    screens the forced break is dropped so the text can wrap to fit. */
@@ -135,7 +138,19 @@ h1 .fill::before{
   font-size:20px;line-height:1.4;font-weight:500;color:var(--ink);
   margin:0 auto 34px;
 }
-.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+/* Two equal columns rather than each button sizing to its own label, so
+   "Call for Participation" and "Workshop Proposal" match. They stack to one
+   full-width column on a phone. */
+.cta{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
+  max-width:556px;margin:0 auto;
+}
+.cta .btn{text-align:center}
+/* 272px a column is the floor: "Call for Participation" measures 220px of type
+   and the button carries 47px of padding, so anything narrower wraps the label. */
+@media (max-width:560px){
+  .cta{grid-template-columns:1fr;max-width:272px}
+}
 /* Both labels are set at 19px/700. That is not only for weight on the page:
    blue on peri measures 4.23:1, short of the 4.5:1 wanted for normal text, but
    past 18.66px bold the large-text threshold of 3:1 applies and it clears
@@ -143,7 +158,7 @@ h1 .fill::before{
 .btn{
   font-family:var(--text);font-size:19px;font-weight:700;
   letter-spacing:.045em;text-transform:uppercase;
-  padding:17px 30px;border-radius:3px;text-decoration:none;
+  padding:16px 22px;border-radius:3px;text-decoration:none;
   background:var(--blue);color:#fff;border:1.5px solid var(--blue);
 }
 .btn:hover{background:var(--blue-deep);border-color:var(--blue-deep)}
@@ -208,12 +223,26 @@ mark{
 }
 body{padding-top:72px}
 @media (max-width:760px){
-  .masthead .bar{padding:0 22px;gap:6px;height:72px}
-  body{padding-top:72px}
-  .masthead .logo img{height:30px}
-  .masthead .badge{font-size:16px;white-space:normal;max-width:13ch;line-height:1.15}
-  .masthead a.lnk{font-size:18px;padding:6px 8px}
-  .masthead a.join{font-size:18px;margin-left:6px}
+  .masthead .bar{padding:0 20px;gap:8px;height:62px}
+  body{padding-top:62px}
+  .masthead .logo img{height:27px}
+  .masthead a.lnk{font-size:16px;padding:6px 8px}
+  .masthead a.join{font-size:16px;margin-left:4px}
+}
+/* The bar stays one row at every width. On a phone the badge is dropped to give
+   the links the space, and the row is faded at its right edge so it is visible
+   that it scrolls rather than ending there. */
+@media (max-width:560px){
+  .masthead .bar{height:58px;padding:0 16px;gap:7px}
+  body{padding-top:58px}
+  .masthead .badge{display:none}
+  .masthead .logo img{height:25px}
+  .masthead nav{gap:1px}
+  .masthead a.lnk{font-size:15px;padding:5px 4px}
+  .masthead a.join{font-size:15px;margin-left:6px}
+  /* The UIST link steps aside on a phone so the four section links and Join Us!
+     all fit the row; the same link sits in the Registration block. */
+  .masthead a.lnk.ext{display:none}
 }
 
 /* ---------------- program ---------------- */
@@ -226,7 +255,10 @@ body{padding-top:72px}
   letter-spacing:-.022em;margin:0 0 34px;
 }
 .program .lede{font-size:22.5px;line-height:1.5;font-weight:500;color:#fff;margin:0 0 36px}
-.sched{max-width:1080px}
+/* No max-width: this was left at 1080px when the container was that wide, and
+   after the container grew to 1360px it held the rules 184px short of every
+   other section's right edge. */
+.sched{}
 .slot{
   display:grid;grid-template-columns:184px 1fr;gap:30px;align-items:baseline;
   padding:12px 0;border-top:1px solid rgba(255,255,255,.3);
@@ -425,10 +457,15 @@ body{padding-top:72px}
      The numeral sits in a fixed left gutter and is centred on the whole title,
      one line or two; the gutter is padding rather than a first-line indent so a
      second line cannot run back underneath the number.
-     Break points are pinned with non-breaking spaces so each title folds at a
-     phrase rather than wherever the box ends. Title 6 sets the ceiling: at this
+     Titles wrap on ordinary spaces. They were once pinned with non-breaking
+     spaces to control where they folded, which made those phrases unbreakable
+     and pushed them out of the card on a phone: 53px past the edge at 390px
+     wide, 123px at 320px. At the current card width the pinning changed nothing
+     on a desktop anyway, so it is gone. Title 6 sets the type ceiling: at this
      card width 24px still leaves slack, 25px sits flush to the edge. */
   padding-left:50px;
+  /* Safety net: no token may push past the card, whatever the screen width. */
+  overflow-wrap:break-word;
 }
 .tp h3 .num{
   position:absolute;left:0;top:50%;transform:translateY(-50%);
@@ -471,7 +508,7 @@ body{padding-top:72px}
       <a class="lnk" href="#scope">Scope</a>
       <a class="lnk" href="#organizers">Organizers</a>
       <a class="lnk" href="#program">Program</a>
-      <a class="lnk" href="https://web.cvent.com/event/c258aabd-a362-447f-a75c-0f191c0b13b1/summary" target="_blank" rel="noopener">UIST&nbsp;'26</a>
+      <a class="lnk ext" href="https://web.cvent.com/event/c258aabd-a362-447f-a75c-0f191c0b13b1/summary" target="_blank" rel="noopener">UIST&nbsp;'26</a>
     </nav>
     <a class="join" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Join Us!</a>
   </div>
@@ -481,7 +518,7 @@ body{padding-top:72px}
   <div class="wrap">
     <h1>The World<br>as a <span class="fill">Canvas</span></h1>
     <p class="tagline">
-      <span class="ghost">Materializing Imagination<br>through Prompting the Physical World</span>
+      <span class="ghost">Materializing Imagination <br>through Prompting the Physical World</span>
       <span class="typed" aria-hidden="true"><span class="chars"></span><span class="caret"></span></span>
       <span class="sr-only">Materializing Imagination through Prompting the Physical World</span>
     </p>
@@ -516,19 +553,19 @@ body{padding-top:72px}
     afternoon prototyping session.</p>
     <div class="grid">
       <div class="tp">
-        <h3><span class="num">1</span><span>In-situ Creation within&nbsp;Physical&nbsp;Space</span></h3>
+        <h3><span class="num">1</span><span>In-situ Creation within Physical Space</span></h3>
         <p>How can generative AI create content and behaviors that fit the user’s physical surroundings, from lighting and scale to material and weight?</p>
       </div>
       <div class="tp">
-        <h3><span class="num">2</span><span>Previsualization and Mental&nbsp;Imagery</span></h3>
+        <h3><span class="num">2</span><span>Previsualization and Mental Imagery</span></h3>
         <p>How can tools help creators preview imagined outcomes without constraining their own mental imagery?</p>
       </div>
       <div class="tp">
-        <h3><span class="num">3</span><span>Expressing and Interpreting Creative&nbsp;Intent</span></h3>
+        <h3><span class="num">3</span><span>Expressing and Interpreting Creative Intent</span></h3>
         <p>How should generative AI interpret creative intent expressed through gesture, gaze, movement, and other signals beyond words?</p>
       </div>
       <div class="tp">
-        <h3><span class="num">4</span><span>Co-Creation across Hardware&nbsp;Heterogeneity</span></h3>
+        <h3><span class="num">4</span><span>Co-Creation across Hardware Heterogeneity</span></h3>
         <p>How can people co-create seamlessly across headsets, tablets, and phones with different input, display, and compute capabilities?</p>
       </div>
       <div class="tp">
@@ -536,7 +573,7 @@ body{padding-top:72px}
         <p>How can creators detect and correct generative errors that emerge through interaction, across viewpoints, or over time?</p>
       </div>
       <div class="tp">
-        <h3><span class="num">6</span><span>Cross-Media Creation, Transformation,&nbsp;and&nbsp;Provenance</span></h3>
+        <h3><span class="num">6</span><span>Cross-Media Creation, Transformation, and Provenance</span></h3>
         <p>As creations move across images, videos, XR, and physical artifacts, what should be preserved, and how can their provenance and ownership remain traceable?</p>
       </div>
     </div>
