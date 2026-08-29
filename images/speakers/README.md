@@ -1,12 +1,8 @@
 # Keynote speaker photos
 
-Wired into `index.html` by exact filename. Displayed as circles, so a square
-crop centred on the face reads best; 400px is plenty.
+Not currently shown on the site: the speakers column beside the programme was
+removed. The schedule names the speaker inline instead, in the Keynote II row.
 
-| File | Person |
-|---|---|
-| `Andy.jpg` | Andy Wilson, Microsoft Research (Keynote II) |
-
-Keynote I is still open: its card shows a translucent circle reading `TBD`.
-When that speaker is confirmed, drop the photo here and replace the `.sp.tbd`
-block in the Program section with the same markup Andy's card uses.
+`Andy.jpg` is kept here for whenever a speaker block comes back, or for the
+poster. Andy Wilson, Microsoft Research, Keynote II —
+https://www.microsoft.com/en-us/research/people/awilson/

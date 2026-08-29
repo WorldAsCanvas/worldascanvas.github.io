@@ -363,51 +363,6 @@ body{padding-top:72px}
   margin:40px 0 0;max-width:none;font-size:18px;font-weight:500;color:#fff;opacity:.82;
 }
 
-/* Speakers sit beside the schedule, in the same circle-name-affiliation format
-   as the organizers, with the colours inverted for the blue ground. */
-.program .cols{display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:start}
-@media (max-width:1000px){
-  .program .cols{grid-template-columns:1fr;gap:40px}
-  .speakers{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-}
-@media (max-width:560px){.speakers{grid-template-columns:1fr}}
-.speakers .lab{
-  font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--peri);margin:0 0 22px;
-}
-@media (max-width:1000px){.speakers .lab{grid-column:1/-1;margin-bottom:0}}
-.sp{margin-bottom:36px;text-align:center}
-.sp .kn{
-  font-family:var(--wordmark);font-weight:400;font-size:19px;line-height:1;
-  color:var(--yellow);margin:0 0 12px;letter-spacing:.01em;
-}
-.sp:last-child{margin-bottom:0}
-.sp a{display:block;text-decoration:none;color:inherit}
-.sp .ph{
-  position:relative;width:100%;max-width:150px;margin:0 auto 14px;
-  aspect-ratio:1/1;border-radius:50%;overflow:hidden;
-  background:rgba(255,255,255,.18);display:grid;place-items:center;
-  transition:transform .22s ease, box-shadow .22s ease;
-}
-.sp .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.sp .ph .ini{font-family:var(--wordmark);font-weight:400;font-size:1.9rem;color:var(--peri)}
-.sp .nm{
-  position:relative;display:inline-block;
-  font-size:22px;font-weight:700;letter-spacing:-.016em;line-height:1.2;
-  margin-bottom:3px;color:#fff;
-}
-.sp .nm::after{
-  content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;
-  background:var(--yellow);border-radius:2px;
-  transform:scaleX(0);transform-origin:left center;
-  transition:transform .24s cubic-bezier(.4,0,.2,1);
-}
-.sp a:hover .nm::after,.sp a:focus-visible .nm::after{transform:scaleX(1)}
-.sp a:hover .ph,.sp a:focus-visible .ph{transform:translateY(-6px);box-shadow:0 0 0 4px var(--yellow)}
-.sp .af{font-size:18px;font-weight:500;color:var(--peri);line-height:1.24}
-/* the slot still to be filled */
-.sp.tbd .ph{background:rgba(255,255,255,.16)}
-.sp.tbd .nm{color:var(--peri)}
 
 /* ---------------- organizers ---------------- */
 .organizers{padding:74px 0 100px}
@@ -695,7 +650,6 @@ body{padding-top:72px}
 <section class="program" id="program">
   <div class="wrap">
     <h2>Program</h2>
-    <div class="cols">
     <div class="sched">
       <div class="slot">
         <div class="t">09:00 – 09:45</div>
@@ -737,24 +691,6 @@ body{padding-top:72px}
         <div class="t">16:15 – 17:00</div>
         <div><h3>Closing</h3></div>
       </div>
-    </div>
-    <div class="speakers">
-      <p class="lab">Keynote Speakers</p>
-      <div class="sp tbd">
-        <p class="kn">Keynote I</p>
-        <div class="ph"><span class="ini">TBD</span></div>
-        <div class="nm">To be announced</div>
-        <div class="af">Academic Perspective</div>
-      </div>
-      <div class="sp">
-        <p class="kn">Keynote II</p>
-        <a href="https://www.microsoft.com/en-us/research/people/awilson/" target="_blank" rel="noopener">
-          <div class="ph"><img src="images/speakers/Andy.jpg" alt="Andy Wilson" onerror="this.remove()"><span class="ini">AW</span></div>
-          <div class="nm">Andy Wilson</div>
-          <div class="af">Microsoft Research</div>
-        </a>
-      </div>
-    </div>
     </div>
   </div>
 </section>
