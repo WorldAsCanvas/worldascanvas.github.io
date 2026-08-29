@@ -276,6 +276,13 @@ body{padding-top:72px}
 /* speaker not yet announced */
 /* Comico for the pending speaker — caps only by design, so it reads as a
    placeholder rather than a name. */
+/* The named speaker. Author rather than Comico, which is caps-only and would
+   shout a person's name; yellow so it reads as the same kind of note as the
+   TBD marker on the keynote still to be filled. */
+.slot .by{
+  margin-left:14px;font-size:19px;font-weight:500;color:var(--yellow);
+  letter-spacing:-.004em;white-space:nowrap;
+}
 .slot .tbd{
   margin-left:16px;font-family:var(--wordmark);font-weight:400;font-size:22px;
   color:var(--yellow);letter-spacing:.01em;white-space:nowrap;
@@ -712,7 +719,7 @@ body{padding-top:72px}
       </div>
       <div class="slot">
         <div class="t">13:45 – 14:30</div>
-        <div><h3>Keynote II — Industry Perspective</h3></div>
+        <div><h3>Keynote II — Industry Perspective<span class="by">by Andy Wilson (MSR)</span></h3></div>
       </div>
       <div class="slot">
         <div class="t">14:30 – 15:00</div>
@@ -777,8 +784,8 @@ body{padding-top:72px}
       <div>
         <p class="step">Step 2</p>
         <p>A short form collects what you work on, so we can shape the day around the people
-        in the room. <strong>It is also where you propose a poster or a demo. Polished or
-        early-stage, both are welcome.</strong></p>
+        in the room. <strong>You can also propose a poster or a demo. That part is
+        optional, and polished or early-stage are equally welcome.</strong></p>
         <p><a class="go" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Open the form &nearr;</a></p>
       </div>
     </div>
