@@ -187,8 +187,10 @@ mark{
   height:72px;display:flex;align-items:center;gap:10px;
 }
 .masthead .logo{margin-right:auto;display:flex;align-items:center;gap:12px;line-height:0;text-decoration:none}
+/* Comico, so the badge is set in the same face as the wordmark below it.
+   The face is caps-only: this reads UIST '26 FULL DAY WORKSHOP. */
 .masthead .badge{
-  font-family:var(--text);font-size:24px;font-weight:600;letter-spacing:-.008em;
+  font-family:var(--wordmark);font-size:24px;font-weight:400;letter-spacing:.01em;
   color:var(--blue);line-height:1.2;white-space:nowrap;
 }
 .masthead .logo img{height:38px;width:auto;display:block}
@@ -222,6 +224,12 @@ mark{
   background:linear-gradient(transparent 12%,var(--yellow-deep) 12%,var(--yellow-deep) 88%,transparent 88%);
 }
 body{padding-top:72px}
+/* The badge is set in Comico, which runs wider than the text face and left
+   272px of the nav behind a scroll at 900px. It steps aside first: the mark
+   still names the site, and the links have to stay reachable. */
+@media (max-width:1100px){
+  .masthead .badge{display:none}
+}
 @media (max-width:760px){
   .masthead .bar{padding:0 20px;gap:8px;height:62px}
   body{padding-top:62px}
@@ -235,7 +243,6 @@ body{padding-top:72px}
 @media (max-width:560px){
   .masthead .bar{height:58px;padding:0 16px;gap:7px}
   body{padding-top:58px}
-  .masthead .badge{display:none}
   .masthead .logo img{height:25px}
   .masthead nav{gap:1px}
   .masthead a.lnk{font-size:15px;padding:5px 4px}
