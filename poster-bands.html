@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World as a Canvas — Poster (bands)</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&f%5B%5D=comico@400&display=swap">
+<style>
+/* ============================================================
+   A4 poster, "bands" edition — the website's section rhythm in
+   one page: white hero, blue pitch, grey organizers, sand
+   registration, sky footer. Print: Cmd-P, A4, margins None,
+   backgrounds ON.
+   ============================================================ */
+:root{
+  --ink:#141A3C; --mute:#6A7192; --rule:#E4E8F5;
+  --blue:#1D41DF; --peri:#B6C4F2; --pale:#DCE4F7;
+  --yellow:#FFE500; --sand:#F6F5F0; --band:#EDF0F8; --sky:#6389F2;
+  --wordmark:"Comico","Author",Helvetica,Arial,sans-serif;
+  --text:"Author",-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+@page{size:A4 portrait;margin:0}
+html,body{margin:0;padding:0;background:#e9e9ec}
+body{
+  font-family:var(--text);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+.sheet{
+  width:210mm;height:297mm;margin:10mm auto;background:#fff;
+  display:flex;flex-direction:column;
+  box-shadow:0 2mm 8mm rgba(20,26,60,.18);overflow:hidden;
+}
+.pad{padding-left:15mm;padding-right:15mm}
+
+/* ---- hero, centred like the site ---- */
+.hero{position:relative;text-align:center;padding-top:12mm;padding-bottom:9mm}
+h1{
+  font-family:var(--wordmark);font-weight:400;font-size:44pt;line-height:1.02;
+  letter-spacing:-.01em;word-spacing:-.1272em;margin:0 0 5mm;
+}
+h1 .fill{
+  display:inline-block;position:relative;isolation:isolate;
+  color:#fff;line-height:.96;padding:.04em .16em .02em;vertical-align:baseline;
+}
+h1 .fill::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:url("images/canvas-crayon-box.png") center/100% 100% no-repeat;
+}
+/* sparkles borrowed from the logo, scattered around the wordmark */
+.spark{position:absolute;font-size:16pt;line-height:1;color:var(--blue)}
+.spark.y{color:var(--yellow);-webkit-text-stroke:.3mm var(--ink)}
+.s1{left:20mm;top:14mm;font-size:13pt}
+.s2{right:24mm;top:11mm}
+.s3{right:17mm;top:34mm;font-size:10pt}
+.s4{left:29mm;top:38mm;font-size:11pt;color:var(--peri)}
+/* the typed tagline, caret resting at its end */
+.tagline{font-size:15.5pt;line-height:1.2;font-weight:500;color:var(--blue);margin:0 0 4mm}
+.caret{
+  display:inline-block;width:.07em;height:.95em;background:var(--peri);
+  vertical-align:-.11em;margin-left:.07em;
+}
+.when{font-size:11.5pt;font-weight:600;color:var(--ink);margin:0;line-height:1.45}
+
+/* ---- blue pitch band, like the program section ---- */
+.pitch{background:var(--blue);color:#fff;padding-top:8mm;padding-bottom:8mm}
+.pitch p{font-size:12pt;line-height:1.5;font-weight:500;margin:0}
+.pitch b{font-weight:700}
+mark{background:var(--yellow);color:var(--ink);padding:0 .12em;border-radius:.3mm}
+
+/* ---- grey organizers band, staggered rows like the site ---- */
+.orgs{background:var(--band);flex:1 1 auto;padding-top:7mm;padding-bottom:7mm}
+.orgs h2{
+  font-size:12pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 5mm;
+}
+ul.people{display:flex;gap:5mm;list-style:none;margin:0;padding:0;width:88%}
+ul.people.row-b{margin-left:auto;margin-top:5mm;justify-content:flex-end}
+ul.people li{width:25%;text-align:center}
+.ph{
+  position:relative;width:25mm;height:25mm;margin:0 auto 2.5mm;
+  border-radius:50%;overflow:hidden;background:var(--blue);
+  display:grid;place-items:center;
+}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .ini{font-family:var(--wordmark);font-size:14pt;color:#fff}
+.nm{font-size:10.5pt;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin-bottom:.7mm}
+.af{font-size:9pt;font-weight:500;color:var(--mute);line-height:1.18}
+
+/* ---- sand registration band ---- */
+.register{background:var(--sand);color:var(--blue);padding-top:6.5mm;padding-bottom:6.5mm;display:flex;align-items:center;gap:6mm}
+.register .qr{width:17mm;height:17mm;flex:0 0 auto}
+.register .how{font-size:10.5pt;font-weight:500;line-height:1.4}
+.register .how b{font-weight:700}
+.register .step{
+  font-family:var(--wordmark);font-weight:400;font-size:13pt;letter-spacing:.01em;
+  margin:0 0 1mm;
+}
+.register .seats{
+  margin-left:auto;text-align:center;flex:0 0 auto;
+  font-family:var(--wordmark);font-size:15pt;line-height:1.25;
+  background:var(--yellow);color:var(--ink);padding:3.5mm 5mm;border-radius:1mm;
+  transform:rotate(-2deg);
+}
+
+/* ---- sky footer strip ---- */
+.contact{background:var(--sky);color:#fff;padding-top:4.5mm;padding-bottom:4.5mm;display:flex;align-items:baseline;gap:6mm}
+.contact .url{
+  font-family:var(--wordmark);font-size:17pt;line-height:1;color:#fff;
+  background-image:linear-gradient(var(--yellow),var(--yellow));
+  background-repeat:no-repeat;background-size:100% .12em;background-position:0 103%;
+  padding-bottom:.08em;
+}
+.contact .inst{
+  margin-left:auto;font-size:8pt;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:#fff;opacity:.92;text-align:right;line-height:1.5;
+}
+
+@media print{
+  html,body{background:#fff}
+  .sheet{margin:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="hero pad">
+    <span class="spark s1">&#10022;</span>
+    <span class="spark s2 y">&#10022;</span>
+    <span class="spark s3">&#10022;</span>
+    <span class="spark s4">&#10022;</span>
+    <h1>The World<br>as a <span class="fill">Canvas</span></h1>
+    <p class="tagline">Materializing Imagination<br>through Prompting the Physical World<span class="caret"></span></p>
+    <p class="when">UIST&nbsp;'26 Full-Day Workshop<br>
+    November 2, 2026 &middot; 09:00 &ndash; 17:00 &middot; Detroit Marriott at the Renaissance Center, Detroit, MI</p>
+  </div>
+
+  <div class="pitch pad">
+    <p><mark>Generative AI</mark> can turn a rough idea into an image, a video, or a working
+    app in minutes — <b>so why is creating an XR experience still so hard?</b> Join
+    researchers and practitioners in HCI, XR, and AI for keynotes, posters and demos, and
+    hands-on prototyping, and help shape a shared research agenda for
+    <mark>accessible, expressive, and collaborative XR creation</mark>.</p>
+  </div>
+
+  <div class="orgs pad">
+    <h2>Organizers</h2>
+    <ul class="people row-a">
+      <li><div class="ph"><img src="images/organizers/HyunA.jpg" alt="" onerror="this.remove()"><span class="ini">HS</span></div>
+        <div class="nm">HyunA Seo</div><div class="af">Seoul National University</div></li>
+      <li><div class="ph"><img src="images/organizers/Nels.jpg" alt="" onerror="this.remove()"><span class="ini">NN</span></div>
+        <div class="nm">Nels Numan</div><div class="af">Google</div></li>
+      <li><div class="ph"><img src="images/organizers/Hyeyoung.webp" alt="" onerror="this.remove()"><span class="ini">HJ</span></div>
+        <div class="nm">Hye-Young Jo</div><div class="af">University of Colorado Boulder</div></li>
+      <li><div class="ph"><img src="images/organizers/Jae.jpg" alt="" onerror="this.remove()"><span class="ini">JL</span></div>
+        <div class="nm">Jaewook Lee</div><div class="af">University of Washington</div></li>
+    </ul>
+    <ul class="people row-b">
+      <li><div class="ph"><img src="images/organizers/Jon.jpg" alt="" onerror="this.remove()"><span class="ini">JF</span></div>
+        <div class="nm">Jon E. Froehlich</div><div class="af">University of Washington</div></li>
+      <li><div class="ph"><img src="images/organizers/Ruofei.jpg" alt="" onerror="this.remove()"><span class="ini">RD</span></div>
+        <div class="nm">Ruofei Du</div><div class="af">Google XR</div></li>
+      <li><div class="ph"><img src="images/organizers/RyoSuzuki.avif" alt="" onerror="this.remove()"><span class="ini">RS</span></div>
+        <div class="nm">Ryo Suzuki</div><div class="af">University of Colorado Boulder</div></li>
+      <li><div class="ph"><img src="images/organizers/Youngki.jpeg" alt="" onerror="this.remove()"><span class="ini">YL</span></div>
+        <div class="nm">Youngki Lee</div><div class="af">Seoul National University</div></li>
+    </ul>
+  </div>
+
+  <div class="register pad">
+    <img class="qr" src="images/qr.svg" alt="QR code for worldascanvas.github.io">
+    <div class="how">
+      <p class="step">How to join</p>
+      <b>Register for UIST&nbsp;'26 and select this workshop</b>, then tell us what you
+      work on — posters and demos welcome, polished or early-stage.
+    </div>
+    <div class="seats">35 seats<br>only!</div>
+  </div>
+
+  <div class="contact pad">
+    <span class="url">worldascanvas.github.io</span>
+    <div class="inst">Seoul National University &middot; Google &middot; University of Colorado Boulder &middot; University of Washington</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -34,16 +34,16 @@ body{
   box-shadow:0 2mm 8mm rgba(20,26,60,.18);overflow:hidden;
 }
 
-/* ---- masthead ---- */
-.top{display:flex;align-items:center;gap:3.5mm;padding-bottom:5mm;border-bottom:.4mm solid var(--blue)}
-.top img{height:11mm;width:auto;display:block}
-.top .who{font-size:11.5pt;font-weight:600;color:var(--blue);letter-spacing:-.01em;line-height:1.15}
-.top .venue{margin-left:auto;text-align:right;font-size:9.5pt;font-weight:500;color:var(--mute);line-height:1.3}
-
-/* ---- wordmark ---- */
+/* ---- wordmark, with the logo tucked behind its right side ---- */
+.head{position:relative;margin:8mm 0 0}
+.head .mark{
+  position:absolute;z-index:0;right:2mm;top:-4mm;width:58mm;height:auto;
+  transform:rotate(6deg);
+}
 h1{
-  font-family:var(--wordmark);font-weight:400;font-size:47pt;line-height:1.0;
-  letter-spacing:-.01em;word-spacing:-.1272em;margin:9mm 0 5mm;
+  position:relative;z-index:1;
+  font-family:var(--wordmark);font-weight:400;font-size:56pt;line-height:1.0;
+  letter-spacing:-.01em;word-spacing:-.1272em;margin:0 0 6mm;
 }
 h1 .fill{
   display:inline-block;position:relative;isolation:isolate;
@@ -53,37 +53,16 @@ h1 .fill::before{
   content:"";position:absolute;inset:0;z-index:-1;
   background:url("images/canvas-crayon-box.png") center/100% 100% no-repeat;
 }
-.sub{font-size:16pt;line-height:1.2;font-weight:500;color:var(--blue);margin:0 0 3mm}
-.when{font-size:11.5pt;font-weight:600;color:var(--ink);margin:0}
+.sub{position:relative;z-index:1;font-size:17pt;line-height:1.25;font-weight:500;color:var(--blue);margin:0 0 4mm}
+.when{position:relative;z-index:1;font-size:12.5pt;font-weight:600;color:var(--ink);margin:0;line-height:1.4}
 
 /* ---- description ---- */
-.about{margin:7mm 0 0;padding-top:6mm;border-top:.3mm solid var(--rule)}
-.about p{font-size:11pt;line-height:1.42;font-weight:500;margin:0}
+.about{margin:7mm 0 0;padding-top:5mm;border-top:.3mm solid var(--rule)}
+.about p{font-size:12pt;line-height:1.5;font-weight:500;margin:0}
 mark{background:var(--yellow);color:var(--ink);padding:0 .1em}
 
-
-/* ---- scope ---- */
-.scope{margin-top:7mm;padding-top:6mm;border-top:.3mm solid var(--rule)}
-.scope h2{
-  font-size:12pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--blue);margin:0 0 4mm;
-}
-.scope ol{
-  display:grid;grid-template-columns:1fr 1fr;gap:2.6mm 7mm;
-  list-style:none;margin:0;padding:0;counter-reset:c;
-}
-.scope li{
-  display:flex;gap:2.6mm;align-items:baseline;
-  font-size:10.5pt;font-weight:600;line-height:1.2;
-}
-.scope li::before{
-  counter-increment:c;content:counter(c);
-  font-family:var(--wordmark);font-size:13pt;color:var(--blue);
-  min-width:4mm;flex:0 0 auto;
-}
-
 /* ---- organizers ---- */
-.people-wrap{margin-top:7mm;padding-top:6mm;border-top:.3mm solid var(--rule)}
+.people-wrap{margin-top:7mm;padding-top:5mm;border-top:.3mm solid var(--rule)}
 .people-wrap h2{
   font-size:12pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--blue);margin:0 0 5mm;
@@ -91,27 +70,36 @@ mark{background:var(--yellow);color:var(--ink);padding:0 .1em}
 ul.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm 5mm;list-style:none;margin:0;padding:0}
 ul.people li{text-align:center}
 .ph{
-  position:relative;width:26mm;height:26mm;margin:0 auto 2.5mm;
+  position:relative;width:28mm;height:28mm;margin:0 auto 2.5mm;
   border-radius:50%;overflow:hidden;background:var(--blue);
   display:grid;place-items:center;
 }
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph .ini{font-family:var(--wordmark);font-size:14pt;color:#fff}
-.nm{font-size:10.5pt;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin-bottom:.8mm}
-.af{font-size:9pt;font-weight:500;color:var(--mute);line-height:1.18}
+.ph .ini{font-family:var(--wordmark);font-size:15pt;color:#fff}
+.nm{font-size:11pt;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin-bottom:.8mm}
+.af{font-size:9.5pt;font-weight:500;color:var(--mute);line-height:1.18}
 
 /* ---- footer ---- */
 .foot{
-  margin-top:auto;padding-top:6mm;border-top:.4mm solid var(--blue);
-  display:flex;align-items:flex-end;gap:6mm;
+  margin-top:auto;padding-top:5mm;border-top:.4mm solid var(--blue);
+  display:flex;align-items:center;gap:5mm;
 }
+.foot .qr{width:16mm;height:16mm;flex:0 0 auto}
 .foot .url{
-  font-family:var(--wordmark);font-size:21pt;line-height:1;color:var(--ink);
+  font-family:var(--wordmark);font-size:19pt;line-height:1;color:var(--ink);
   background-image:linear-gradient(var(--yellow),var(--yellow));
   background-repeat:no-repeat;background-size:100% .3em;background-position:0 88%;
 }
-.foot .join{margin-left:auto;text-align:right;font-size:10pt;font-weight:500;color:var(--mute);line-height:1.35}
+.foot .scan{font-size:9pt;font-weight:500;color:var(--mute);margin-top:1.6mm}
+.foot .join{margin-left:auto;text-align:right;font-size:9.5pt;font-weight:500;color:var(--mute);line-height:1.4}
 .foot .join b{color:var(--ink);font-weight:700}
+
+/* institution line under the footer */
+.inst{
+  margin-top:3.5mm;padding-top:3mm;border-top:.3mm solid var(--rule);
+  display:flex;justify-content:space-between;
+  font-size:8.5pt;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);
+}
 
 @media print{
   html,body{background:#fff}
@@ -122,14 +110,13 @@ ul.people li{text-align:center}
 <body>
 <div class="sheet">
 
-  <div class="top">
-    <img src="images/logo.png" alt="">
-    <div class="who">UIST&nbsp;'26<br>Full Day Workshop</div>
-    <div class="venue">November 2, 2026<br>Detroit Marriott at the Renaissance Center</div>
+  <div class="head">
+    <img class="mark" src="images/logo.png" alt="">
+    <h1>The World<br>as a <span class="fill">Canvas</span></h1>
   </div>
-
-  <h1>The World<br>as a <span class="fill">Canvas</span></h1>
   <p class="sub">Materializing Imagination through Prompting the Physical World</p>
+  <p class="when">UIST&nbsp;'26 Full-Day Workshop<br>
+  November 2, 2026 &middot; 09:00 &ndash; 17:00 &middot; Detroit Marriott at the Renaissance Center, Detroit, MI</p>
 
   <div class="about">
     <p><mark>Generative AI</mark> is rapidly lowering the barriers to creation, yet XR
@@ -139,18 +126,6 @@ ul.people li{text-align:center}
     space and time. This workshop brings together researchers and practitioners to examine
     these challenges and develop a shared vision for more
     <mark>accessible, expressive, and collaborative XR creation</mark>.</p>
-  </div>
-
-  <div class="scope">
-    <h2>Six Challenges</h2>
-    <ol>
-      <li>In-situ Creation within Physical Space</li>
-      <li>Co-Creation across Hardware Heterogeneity</li>
-      <li>Previsualization and Mental Imagery</li>
-      <li>Evaluating Generated Content</li>
-      <li>Expressing and Interpreting Creative Intent</li>
-      <li>Cross-Media Creation, Transformation, and Provenance</li>
-    </ol>
   </div>
 
   <div class="people-wrap">
@@ -176,8 +151,18 @@ ul.people li{text-align:center}
   </div>
 
   <div class="foot">
-    <span class="url">worldascanvas.github.io</span>
-    <div class="join"><b>Join us</b><br>Register through UIST&nbsp;'26 and select this workshop</div>
+    <img class="qr" src="images/qr.svg" alt="QR code for worldascanvas.github.io">
+    <div>
+      <div class="url">worldascanvas.github.io</div>
+      <div class="scan">Scan to learn more &amp; register</div>
+    </div>
+    <div class="join"><b>Join us. Limited to 35 seats</b><br>Register through UIST&nbsp;'26 and select this workshop</div>
+  </div>
+  <div class="inst">
+    <span>Seoul National University</span>
+    <span>Google</span>
+    <span>University of Colorado Boulder</span>
+    <span>University of Washington</span>
   </div>
 
 </div>
