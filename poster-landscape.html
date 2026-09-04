@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World as a Canvas — Poster (16:9)</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&f%5B%5D=comico@400&display=swap">
+<style>
+/* ============================================================
+   Landscape poster, 16:9 at 1920×1080 CSS px. For a slide or a
+   screen, screenshot at that size; for print, Cmd-P with paper
+   size "custom 508 × 285.75 mm", margins None, backgrounds on.
+   The sheet scales to the window, so any viewport shows it whole.
+   ============================================================ */
+:root{
+  --ink:#141A3C; --mute:#6A7192; --rule:#E4E8F5;
+  --blue:#1D41DF; --blue-deep:#1735BC; --peri:#B6C4F2; --pale:#DCE4F7; --band:#EDF0F8;
+  --yellow:#FFE500;
+  --wordmark:"Comico","Author",Helvetica,Arial,sans-serif;
+  --text:"Author",-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+@page{size:508mm 285.75mm;margin:0}
+html,body{margin:0;padding:0;background:#e9e9ec;height:100%}
+body{
+  font-family:var(--text);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  display:grid;place-items:center;min-height:100vh;
+}
+/* Fixed 1920×1080 canvas, scaled to fit the window. */
+.stage{width:1920px;height:1080px;transform-origin:center;position:relative}
+.frame{
+  position:absolute;inset:0;background:var(--blue);overflow:hidden;
+}
+/* Ragged white sheet on the blue, drawn by an SVG so the edge can be
+   displaced like a torn or crayoned paper edge. */
+.frame svg.paper{position:absolute;inset:0;width:100%;height:100%}
+/* Crayon grain over the blue border: a noise layer, clipped to the border by
+   sitting under the white sheet. */
+.frame svg.grain{position:absolute;inset:0;width:100%;height:100%;opacity:.22;mix-blend-mode:screen}
+
+/* Content area = inside the sheet (x 150..1888, y 32..1048), with padding. */
+.sheet{
+  position:absolute;left:150px;top:32px;width:1738px;height:1016px;
+  padding:54px 66px 40px 68px;
+  display:grid;grid-template-rows:auto auto auto;align-content:start;
+}
+
+/* ---- left rail ---- */
+.rail{
+  position:absolute;left:0;top:0;width:150px;height:1080px;color:#fff;
+}
+.rail .tag{
+  position:absolute;left:50%;top:62%;
+  transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center;
+  white-space:nowrap;font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+}
+.rail .dots{position:absolute;left:75px;bottom:60px;display:grid;gap:14px}
+.rail .dots i{display:block;width:12px;height:12px;border-radius:50%;background:#fff}
+.rail .dots i:last-child{background:var(--yellow)}
+
+/* ---- top: title column + art column ---- */
+.top{display:grid;grid-template-columns:1fr 520px;column-gap:70px;align-items:start}
+.kicker{
+  font-size:17px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);
+  margin:0 0 30px;
+}
+h1{
+  font-family:var(--wordmark);font-weight:400;font-size:122px;line-height:.92;
+  letter-spacing:-.005em;word-spacing:-.1272em;margin:0 0 30px;color:var(--ink);
+}
+h1 .fill{
+  display:inline-block;position:relative;isolation:isolate;
+  color:#fff;line-height:.92;padding:.05em .14em .04em;vertical-align:baseline;
+}
+h1 .fill::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:url("images/canvas-crayon-box.png") center/100% 100% no-repeat;
+}
+.sub{font-size:35px;line-height:1.2;font-weight:500;color:var(--blue);margin:0 0 42px;max-width:1010px}
+
+.callout{
+  background:var(--band);border-left:12px solid var(--yellow);
+  padding:26px 34px 26px 32px;max-width:1010px;
+  font-size:24px;line-height:1.5;font-weight:500;
+}
+.callout b{color:var(--blue);font-weight:700}
+
+/* art column */
+.art{display:grid;justify-items:end;row-gap:22px;margin-top:-10px}
+.globe{
+  width:440px;height:440px;border-radius:50%;background:var(--band);
+  display:grid;place-items:center;overflow:hidden;
+}
+.globe img{width:92%;height:auto;transform:translateY(2%)}
+.scan{display:grid;grid-template-columns:120px 1fr;column-gap:22px;align-items:center;justify-self:stretch}
+.scan img{width:120px;height:120px}
+.scan .lm{font-size:17px;font-weight:700;color:var(--ink);margin:0 0 4px}
+.scan .url{
+  font-family:var(--wordmark);font-size:31px;line-height:1;color:var(--ink);white-space:nowrap;
+  background-image:linear-gradient(var(--yellow),var(--yellow));
+  background-repeat:no-repeat;background-size:100% .28em;background-position:0 92%;
+}
+
+/* ---- info bar ---- */
+.bar{
+  background:var(--blue);color:#fff;display:grid;
+  grid-template-columns:320px 240px 1fr auto;align-items:center;
+  padding:20px 34px;margin-top:30px;
+}
+.bar .k{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--peri);margin:0 0 6px}
+.bar .v{font-size:21px;font-weight:700;margin:0;letter-spacing:-.005em}
+.seats{
+  font-family:var(--wordmark);font-size:24px;color:var(--ink);background:var(--yellow);
+  padding:14px 22px 12px;line-height:1;white-space:nowrap;letter-spacing:.02em;
+}
+
+/* ---- organizers ---- */
+.people-wrap{margin-top:28px}
+.people-head{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 18px}
+.people-head h2{
+  font-size:17px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin:0;
+}
+.people-head .fmt{font-size:14px;font-weight:600;color:var(--mute);margin:0}
+ul.people{display:grid;grid-template-columns:repeat(8,1fr);gap:0 24px;list-style:none;margin:0;padding:0}
+ul.people li{text-align:center}
+.ph{
+  position:relative;width:104px;height:104px;margin:0 auto 12px;
+  border-radius:50%;overflow:hidden;background:var(--blue);display:grid;place-items:center;
+}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .ini{font-family:var(--wordmark);font-size:36px;color:#fff}
+.nm{font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin-bottom:4px}
+.af{font-size:13.5px;font-weight:500;color:var(--mute);line-height:1.2}
+
+@media print{
+  html,body{background:#fff;display:block;min-height:0}
+  .stage{transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="frame">
+    <svg class="grain" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+      <filter id="g" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9 0.05" numOctaves="2" seed="3" stitchTiles="stitch"/>
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -0.5"/>
+      </filter>
+      <rect width="1920" height="1080" filter="url(#g)"/>
+    </svg>
+    <svg class="paper" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+      <filter id="rag" x="-3%" y="-5%" width="106%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0045 0.012" numOctaves="2" seed="11"/>
+        <feDisplacementMap in="SourceGraphic" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <rect x="150" y="32" width="1738" height="1016" fill="#fff" filter="url(#rag)"/>
+    </svg>
+  </div>
+
+  <div class="rail">
+    <div class="tag">UIST&nbsp;'26 Full-Day Workshop</div>
+    <div class="dots"><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="sheet">
+    <div class="top">
+      <div>
+        <p class="kicker">Detroit, MI, USA &nbsp;/&nbsp; November 2, 2026</p>
+        <h1>The World<br>as a <span class="fill">Canvas</span></h1>
+        <p class="sub">Materializing Imagination through Prompting the Physical World</p>
+        <div class="callout"><b>Generative AI makes creation easier. XR is still different.</b>
+          Explore how creation changes when it moves beyond flat screens into real spaces,
+          bodies, devices, and time.</div>
+      </div>
+      <div class="art">
+        <div class="globe"><img src="images/logo-source.png" alt=""></div>
+        <div class="scan">
+          <img src="images/qr.svg" alt="QR code for worldascanvas.github.io">
+          <div>
+            <p class="lm">Learn more and register</p>
+            <div class="url">worldascanvas.github.io</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div></div>
+
+    <div class="bar">
+      <div><p class="k">Date</p><p class="v">Monday, November 2, 2026</p></div>
+      <div><p class="k">Time</p><p class="v">09:00 &ndash; 17:00</p></div>
+      <div><p class="k">Location</p><p class="v">Detroit Marriott at the Renaissance Center</p></div>
+      <div class="seats">35 seats only</div>
+    </div>
+
+    <div class="people-wrap">
+      <div class="people-head">
+        <h2>Organizers</h2>
+        <p class="fmt">Keynotes &nbsp;/&nbsp; Posters and demos &nbsp;/&nbsp; Hands-on prototyping</p>
+      </div>
+      <ul class="people">
+        <li><div class="ph"><img src="images/organizers/HyunA.jpg" alt="" onerror="this.remove()"><span class="ini">HS</span></div>
+          <div class="nm">HyunA Seo</div><div class="af">Seoul National University</div></li>
+        <li><div class="ph"><img src="images/organizers/Nels.jpg" alt="" onerror="this.remove()"><span class="ini">NN</span></div>
+          <div class="nm">Nels Numan</div><div class="af">Google</div></li>
+        <li><div class="ph"><img src="images/organizers/Hyeyoung.webp" alt="" onerror="this.remove()"><span class="ini">HJ</span></div>
+          <div class="nm">Hye-Young Jo</div><div class="af">University of Colorado Boulder</div></li>
+        <li><div class="ph"><img src="images/organizers/Jae.jpg" alt="" onerror="this.remove()"><span class="ini">JL</span></div>
+          <div class="nm">Jaewook Lee</div><div class="af">University of Washington</div></li>
+        <li><div class="ph"><img src="images/organizers/Jon.jpg" alt="" onerror="this.remove()"><span class="ini">JF</span></div>
+          <div class="nm">Jon E. Froehlich</div><div class="af">University of Washington</div></li>
+        <li><div class="ph"><img src="images/organizers/Ruofei.jpg" alt="" onerror="this.remove()"><span class="ini">RD</span></div>
+          <div class="nm">Ruofei Du</div><div class="af">Google XR</div></li>
+        <li><div class="ph"><img src="images/organizers/RyoSuzuki.avif" alt="" onerror="this.remove()"><span class="ini">RS</span></div>
+          <div class="nm">Ryo Suzuki</div><div class="af">University of Colorado Boulder</div></li>
+        <li><div class="ph"><img src="images/organizers/Youngki.jpeg" alt="" onerror="this.remove()"><span class="ini">YL</span></div>
+          <div class="nm">Youngki Lee</div><div class="af">Seoul National University</div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+// Scale the fixed 1920×1080 stage to fit whatever window shows it.
+(function(){
+  var st=document.getElementById('stage');
+  function fit(){
+    var s=Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    st.style.transform='scale('+s+')';
+    document.body.style.height=(1080*s)+'px';
+  }
+  fit(); window.addEventListener('resize',fit);
+})();
+</script>
+</body>
+</html>
