@@ -554,6 +554,12 @@ body{padding-top:72px}
 .overview strong{font-weight:700}
 .overview p{max-width:78ch;margin:0 0 18px;font-size:22.5px;line-height:1.56;font-weight:500}
 .overview a{color:var(--blue);font-weight:500;text-decoration:underline;text-underline-offset:2px}
+/* The globe mark fills the empty right side of the overview. It is decorative
+   (alt=""), sits beside the paragraph, and steps out below 1000px where the
+   text needs the full width. */
+.overview .cols{display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:center}
+.overview .mark{width:300px;height:auto;justify-self:end}
+@media (max-width:1000px){ .overview .cols{grid-template-columns:1fr} .overview .mark{display:none} }
 
 @media (max-width:620px){
   .wrap{padding:0 22px}
@@ -599,6 +605,7 @@ body{padding-top:72px}
 <section class="overview" id="overview">
   <div class="wrap">
     <h2>Workshop Overview</h2>
+    <div class="cols">
     <p>This workshop explores how <mark>generative AI</mark> can reshape the way people
     <mark>create in XR</mark>. While it is rapidly lowering barriers to creation, XR
     introduces fundamentally different challenges as creation moves beyond flat screens into the
@@ -609,6 +616,8 @@ body{padding-top:72px}
     they create. <strong>The World as a Canvas</strong> brings together researchers and
     practitioners to examine these emerging challenges and develop a shared vision for more
     accessible, expressive, and collaborative XR creation.</p>
+    <img class="mark" src="images/logo-overview.png" alt="" width="640" height="487">
+    </div>
   </div>
 </section>
 
