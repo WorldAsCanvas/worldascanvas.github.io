@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World as a Canvas — Keynote Speakers</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&f%5B%5D=comico@400&display=swap">
+<style>
+/* ============================================================
+   Keynote announcement, blue ground, 1080×920 CSS px. The whole
+   card is the brand blue, graded deeper towards the bottom, with
+   the globe mark as a faint white watermark in the lower right. One
+   left-aligned grid with 64px margins. Comico only for the
+   wordmark (CANVAS in yellow letters, no box); Author for every
+   other line, in white or pale. Yellow appears twice: the CANVAS
+   letters and the underline beneath the URL.
+   Export with a headless screenshot at 1080×920 (2× for retina).
+   ============================================================ */
+:root{
+  --w:1080px; --h:920px; --m:64px;
+  --blue:#1D41DF; --pale:#DCE4F7; --yellow:#FFE500;
+  --word-space:-0.1272em;
+  --wordmark:"Comico","Author",Helvetica,Arial,sans-serif;
+  --text:"Author",-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0f2a9c;height:100%}
+body{
+  font-family:var(--text);color:#fff;
+  -webkit-font-smoothing:antialiased;
+  display:grid;place-items:center;min-height:100vh;
+}
+.stage{
+  width:var(--w);height:var(--h);transform-origin:center;position:relative;
+  overflow:hidden;padding:var(--m);
+  /* Lighter blue at the top with a soft light top-left, the brand blue
+     through the middle, and a clearly deeper blue at the bottom. */
+  background:
+    radial-gradient(1000px 640px at 6% -4%, rgba(255,255,255,.22), rgba(255,255,255,0) 62%),
+    linear-gradient(172deg, #2E58F4 0%, var(--blue) 42%, #10289A 100%);
+}
+/* The globe mark as a watermark in the lower right, about nine tenths of it
+   inside the card. It keeps its own colours and is screened onto the blue, so
+   the cream continents, the ring and the brush stay legible as the logo while
+   the blue parts sink into the ground. logo-watermark.png is the mark without
+   the small star at its lower right, which sat awkwardly against the card edge. */
+.bg-globe{
+  position:absolute;right:-50px;bottom:-42px;width:480px;height:auto;
+  mix-blend-mode:screen;opacity:.5;pointer-events:none;
+  /* Opacity graded across the mark: full at the lower right, fading out
+     towards the upper left where it meets the speaker text. */
+  -webkit-mask-image:linear-gradient(to top left, #000 28%, rgba(0,0,0,.55) 58%, rgba(0,0,0,0) 92%);
+  mask-image:linear-gradient(to top left, #000 28%, rgba(0,0,0,.55) 58%, rgba(0,0,0,0) 92%);
+}
+/* Content paints above the watermark; the CTA keeps its own absolute position. */
+.stage>*:not(.bg-globe):not(.cta){position:relative}
+
+/* ---- top line: workshop left, date and city right ---- */
+.meta{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:22px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  line-height:1;color:#fff;
+}
+
+/* ---- wordmark, two lines as on the poster ---- */
+h1{
+  font-family:var(--wordmark);font-weight:400;font-size:104px;line-height:.94;
+  letter-spacing:-.01em;word-spacing:var(--word-space);
+  margin:40px 0 0;color:#fff;
+}
+h1 .l{display:block;white-space:nowrap}
+h1 .fill{color:var(--yellow)}
+
+.sub{
+  font-size:26px;line-height:1.25;font-weight:600;color:#fff;opacity:.94;
+  margin:20px 0 0;max-width:900px;
+}
+
+/* ---- the one rule ---- */
+.rule{height:1px;background:var(--pale);opacity:.45;margin:40px 0 36px}
+
+/* ---- speakers ---- */
+h2{
+  font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1.1;
+  margin:0 0 28px;color:#fff;
+}
+/* Each speaker is a row: ringed portrait, then name and affiliation beside
+   it. The two columns are equal so the rows share one rhythm, and the text
+   column is wide enough for the longer affiliation on one line. */
+ul.people{
+  display:grid;grid-template-columns:1fr 1fr;gap:0 36px;list-style:none;
+  margin:0;padding:0;
+}
+ul.people li{display:grid;grid-template-columns:224px 1fr;gap:22px;align-items:start}
+/* Name and affiliation sit in the upper half of the portrait rather than at
+   its centre, which keeps the right-hand pair clear of the globe watermark. */
+ul.people li>div:last-child{margin-top:40px}
+.ph{
+  position:relative;width:224px;height:224px;margin:0;
+  border-radius:50%;overflow:hidden;background:rgba(255,255,255,.18);
+  box-shadow:0 0 0 3px #fff;
+}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.nm{font-size:30px;font-weight:700;letter-spacing:-.016em;line-height:1.15;margin:0 0 5px;white-space:nowrap}
+.af{font-size:22px;font-weight:600;color:var(--pale);line-height:1.25;white-space:nowrap}
+
+/* ---- footer: prefix in pale, URL in white 700, yellow underline only ---- */
+.cta{
+  position:absolute;left:var(--m);right:var(--m);bottom:var(--m);
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+}
+.cta .lm{font-size:26px;font-weight:500;color:var(--pale);line-height:1}
+.cta .url{
+  font-size:32px;font-weight:700;letter-spacing:-.012em;line-height:1;color:#fff;
+  padding-bottom:6px;
+  background-image:linear-gradient(var(--yellow),var(--yellow));
+  background-repeat:no-repeat;background-size:100% 4px;background-position:0 100%;
+}
+
+@media print{
+  html,body{background:#fff;display:block;min-height:0}
+  .stage{transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <img class="bg-globe" src="images/logo-watermark.png" alt="">
+  <div class="meta">
+    <span>UIST 2026 Workshop</span>
+    <span>November 2 &middot; Detroit</span>
+  </div>
+
+  <h1><span class="l">The World</span><span class="l">as a <span class="fill">Canvas</span></span></h1>
+  <p class="sub">Materializing Imagination through Prompting the Physical World</p>
+
+  <div class="rule"></div>
+
+  <h2>Keynote Speakers</h2>
+  <ul class="people">
+    <li>
+      <div class="ph"><img src="images/speakers/Ken.jpg" alt=""></div>
+      <div><div class="nm">Ken Perlin</div><div class="af">New York University</div></div>
+    </li>
+    <li>
+      <div class="ph"><img src="images/speakers/Andy.jpg" alt=""></div>
+      <div><div class="nm">Andy Wilson</div><div class="af">Microsoft Research</div></div>
+    </li>
+  </ul>
+
+  <div class="cta">
+    <span class="lm">Full program and registration at</span>
+    <span class="url">worldascanvas.github.io</span>
+  </div>
+</div>
+<script>
+(function(){
+  // Scale the fixed stage to fit whatever window shows it.
+  var st=document.getElementById('stage');
+  var cs=getComputedStyle(document.documentElement);
+  var W=parseFloat(cs.getPropertyValue('--w'))||1080;
+  var H=parseFloat(cs.getPropertyValue('--h'))||920;
+  function fit(){
+    var s=Math.min(window.innerWidth/W, window.innerHeight/H);
+    st.style.transform='scale('+s+')';
+    document.body.style.height=(H*s)+'px';
+  }
+  fit(); window.addEventListener('resize',fit);
+})();
+</script>
+</body>
+</html>

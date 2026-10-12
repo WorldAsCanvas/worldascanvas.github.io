@@ -7,4 +7,4 @@ reads best. 400px is plenty.
 | File | Person |
 |---|---|
 | `Ken.jpg` | Ken Perlin, New York University (Keynote I) — https://mrl.cs.nyu.edu/~perlin/ |
-| `Andy.jpg` | Andy Wilson, Microsoft Research (Keynote II) — https://www.microsoft.com/en-us/research/people/awilson/ |
+| `Andy.jpg` | Andy Wilson, Microsoft Research (Keynote II) — https://www.microsoft.com/en-us/research/people/awilson/ ; the profile headshot at its original 505×519 |
