@@ -6,8 +6,5 @@ reads best. 400px is plenty.
 
 | File | Person |
 |---|---|
+| `Ken.jpg` | Ken Perlin, New York University (Keynote I) — https://mrl.cs.nyu.edu/~perlin/ |
 | `Andy.jpg` | Andy Wilson, Microsoft Research (Keynote II) — https://www.microsoft.com/en-us/research/people/awilson/ |
-
-Keynote I is still open: its card shows a translucent circle reading `TBD`.
-When that speaker is confirmed, drop the photo here and give the `.sp.tbd`
-block the same markup Andy's card uses.

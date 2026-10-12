@@ -287,17 +287,10 @@ body{padding-top:72px}
   display:inline;font-size:19px;font-weight:500;color:var(--peri);
   line-height:1.3;
 }
-/* speaker not yet announced */
-/* Comico for the pending speaker — caps only by design, so it reads as a
-   placeholder rather than a name. */
-/* The named speaker, in the display face like the TBD marker beside it.
-   Comico has no lowercase, so this sets as BY ANDY WILSON (MSR). */
+/* The named speaker, in the display face. Comico has no lowercase, so this
+   sets as BY KEN PERLIN (NYU). */
 .slot .by{
   margin-left:14px;font-family:var(--wordmark);font-weight:400;font-size:22px;
-  color:var(--yellow);letter-spacing:.01em;white-space:nowrap;
-}
-.slot .tbd{
-  margin-left:16px;font-family:var(--wordmark);font-weight:400;font-size:22px;
   color:var(--yellow);letter-spacing:.01em;white-space:nowrap;
 }
 .slot .kind::before{
@@ -414,9 +407,6 @@ body{padding-top:72px}
 .sp a:hover .nm::after,.sp a:focus-visible .nm::after{transform:scaleX(1)}
 .sp a:hover .ph,.sp a:focus-visible .ph{transform:translateY(-6px);box-shadow:0 0 0 4px var(--yellow)}
 .sp .af{font-size:18px;font-weight:500;color:var(--peri);line-height:1.24}
-/* the slot still to be filled */
-.sp.tbd .ph{background:rgba(255,255,255,.16)}
-.sp.tbd .nm{color:var(--peri)}
 .sp .kn{
   font-family:var(--wordmark);font-weight:400;font-size:19px;line-height:1;
   color:var(--yellow);margin:0 0 12px;letter-spacing:.01em;
@@ -725,7 +715,7 @@ body{padding-top:72px}
       </div>
       <div class="slot">
         <div class="t">09:45 – 10:30</div>
-        <div><h3>Keynote I — Academic Perspective<span class="tbd">Speaker TBD</span></h3></div>
+        <div><h3>Keynote I — Academic Perspective<span class="by">by Ken Perlin (NYU)</span></h3></div>
       </div>
       <div class="slot brk">
         <div class="t">10:30 – 11:00</div>
@@ -761,11 +751,13 @@ body{padding-top:72px}
       </div>
     </div>
     <div class="speakers">
-      <div class="sp tbd">
+      <div class="sp">
         <p class="kn">Keynote I</p>
-        <div class="ph"><span class="ini">TBD</span></div>
-        <div class="nm">To be announced</div>
-        <div class="af">Academic Perspective</div>
+        <a href="https://mrl.cs.nyu.edu/~perlin/" target="_blank" rel="noopener">
+          <div class="ph"><img src="images/speakers/Ken.jpg" alt="Ken Perlin" onerror="this.remove()"><span class="ini">KP</span></div>
+          <div class="nm">Ken Perlin</div>
+          <div class="af">New York University</div>
+        </a>
       </div>
       <div class="sp">
         <p class="kn">Keynote II</p>

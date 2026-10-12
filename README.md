@@ -47,5 +47,4 @@ Fontshare API are each expressly permitted.
 
 ## Still to fill in
 
-- Keynote speakers, both marked `SPEAKER TBD`
 - Notification date, marked `TBD`
