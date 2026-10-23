@@ -6,7 +6,10 @@
 <meta name="color-scheme" content="light only">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&f%5B%5D=comico@400&display=swap">
+<!-- One request per family: asked for together, Fontshare now returns
+     Author alone and drops Comico without an error. -->
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=author@300,400,500,600,700&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=comico@400&display=swap">
 <style>
 /* ============================================================
    Wide poster, 1920x1080 — for slides, social media, and
