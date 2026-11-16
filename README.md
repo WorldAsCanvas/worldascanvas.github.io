@@ -17,15 +17,16 @@ the-world-as-a-canvas-uist26-workshop.pdf  linked from the Workshop Proposal but
 favicon.ico
 images/                                    see the README in that folder
 images/organizers/                         portraits, wired by exact filename
+images/photos/                             workshop photos shown in the Photos section
 ```
 
 Sections in order: hero · Workshop Overview · Six Challenges · Organizers · Program ·
-Photos · Outcomes · Contact.
+Photos · Contact.
 
 The workshop took place on November 2, 2026. The page is now in its after-the-event
-state: the registration block and the participant form links are gone, Photos links to
-Ruofei Du's 360° photos (hosted on his viewer, not in this repository), and Outcomes
-holds placeholders for the research agenda and the post-workshop report.
+state: the registration block and the participant form links are gone, and Photos shows
+a gallery from `images/photos/` plus four numbered links to Ruofei Du's 360° photos
+(hosted on his viewer, not in this repository).
 
 ## Typefaces
 
@@ -52,5 +53,5 @@ Fontshare API are each expressly permitted.
 
 ## Still to fill in
 
-- Outcomes: research agenda and post-workshop report, both marked `Coming soon`
-- Photos: Google Photos album link and a few selected photos
+- Photos: the Google Photos album link ("More photos!")
+- Research agenda and post-workshop report, once they are ready
