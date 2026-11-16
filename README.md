@@ -20,7 +20,12 @@ images/organizers/                         portraits, wired by exact filename
 ```
 
 Sections in order: hero · Workshop Overview · Six Challenges · Organizers · Program ·
-Registration · Contact.
+Photos · Outcomes · Contact.
+
+The workshop took place on November 2, 2026. The page is now in its after-the-event
+state: the registration block and the participant form links are gone, Photos links to
+Ruofei Du's 360° photos (hosted on his viewer, not in this repository), and Outcomes
+holds placeholders for the research agenda and the post-workshop report.
 
 ## Typefaces
 
@@ -47,4 +52,5 @@ Fontshare API are each expressly permitted.
 
 ## Still to fill in
 
-- Notification date, marked `TBD`
+- Outcomes: research agenda and post-workshop report, both marked `Coming soon`
+- Photos: Google Photos album link and a few selected photos

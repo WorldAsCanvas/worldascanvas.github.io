@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The World as a Canvas</title>
 <meta name="color-scheme" content="light only">
-<meta name="description" content="A full-day UIST '26 workshop on how generative AI can reshape creation in XR. November 2, 2026, Detroit Marriott at the Renaissance Center.">
+<meta name="description" content="A full-day UIST '26 workshop on how generative AI can reshape creation in XR. Held November 2, 2026, at the Detroit Marriott at the Renaissance Center.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The World as a Canvas · UIST '26 Workshop">
-<meta property="og:description" content="Materializing Imagination through Prompting the Physical World. A full-day workshop on generative AI and XR creation. November 2, 2026, Detroit, MI.">
+<meta property="og:description" content="Materializing Imagination through Prompting the Physical World. A full-day workshop on generative AI and XR creation. Held November 2, 2026, Detroit, MI.">
 <meta property="og:url" content="https://worldascanvas.github.io/">
 <meta property="og:image" content="https://worldascanvas.github.io/images/logo-source.png">
 <meta name="twitter:card" content="summary">
@@ -143,13 +143,15 @@ h1 .fill::before{
   overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
 }
 
-/* Date and venue, sitting between the tagline and the two buttons. */
+/* Date and venue, sitting between the tagline and the two buttons. Since the
+   workshop has taken place, a second line thanks the people who came. */
+.when .thanks{color:var(--blue);font-weight:600}
 .when{
   font-size:20px;line-height:1.4;font-weight:500;color:var(--ink);
   margin:0 auto 34px;
 }
 /* Two equal columns rather than each button sizing to its own label, so
-   "Call for Participation" and "Workshop Proposal" match. They stack to one
+   "Workshop Photos" and "Workshop Proposal" match. They stack to one
    full-width column on a phone. */
 .cta{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
@@ -211,8 +213,8 @@ mark{
   color:var(--ink);text-decoration:none;white-space:nowrap;
   padding:6px 11px;border-radius:4px;
 }
-/* Hover marks the link with a peri band the same height as the Join Us! one.
-   Sized in em so it tracks the type: .9em matches the 76% band that the Join Us!
+/* Hover marks the link with a peri band the same height as the Photos one.
+   Sized in em so it tracks the type: .9em matches the 76% band that the Photos
    gradient paints on its own shorter box. */
 .masthead a.lnk:hover,
 .masthead a.lnk:focus-visible{
@@ -257,8 +259,8 @@ body{padding-top:72px}
   .masthead nav{gap:1px}
   .masthead a.lnk{font-size:15px;padding:5px 4px}
   .masthead a.join{font-size:15px;margin-left:6px}
-  /* The UIST link steps aside on a phone so the four section links and Join Us!
-     all fit the row; the same link sits in the Registration block. */
+  /* The UIST link steps aside on a phone so the four section links and Photos
+     all fit the row. */
   .masthead a.lnk.ext{display:none}
 }
 
@@ -310,42 +312,66 @@ body{padding-top:72px}
   .slot h3{font-size:21px}
 }
 
-/* ---------------- registration ---------------- */
-/* Three columns on a warm ground, set entirely in blue: the heading sits in the
-   first column and the two steps read across, so the order of what to do is the
-   order you read in. */
-.register{background:var(--sand);color:var(--blue);padding:96px 0 104px}
-.register .cols{
+/* ---------------- photos ---------------- */
+/* Added after the workshop. Each card opens one of Ruofei Du's 360° photos in
+   his own viewer; the images are not copied into this repository. */
+.photos{padding:86px 0 96px}
+.photos h2{
+  font-family:var(--text);font-weight:600;
+  font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
+  letter-spacing:-.022em;margin:0 0 10px;
+}
+.photos .lede{font-size:22.5px;line-height:1.5;font-weight:500;margin:0 0 40px;max-width:70ch}
+.shots{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  list-style:none;margin:0;padding:0;
+}
+@media (max-width:1000px){.shots{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.shots{grid-template-columns:1fr}}
+.shots a{
+  display:flex;flex-direction:column;min-height:196px;height:100%;
+  background:var(--pale);color:var(--ink);text-decoration:none;
+  border-radius:5px;padding:22px 24px 24px;
+  transition:background-color .18s ease, transform .22s ease;
+}
+/* Yellow as a fill under ink and blue type, never as a type colour. */
+.shots a:hover,.shots a:focus-visible{background:var(--yellow);transform:translateY(-4px)}
+.shots .deg{
+  font-family:var(--wordmark);font-weight:400;font-size:46px;line-height:1;
+  color:var(--blue);
+}
+.shots .ttl{
+  margin-top:auto;padding-top:26px;
+  font-size:24px;font-weight:700;letter-spacing:-.016em;line-height:1.22;
+}
+.shots .open{font-size:18px;font-weight:600;color:var(--blue);margin-top:4px}
+
+/* ---------------- outcomes ---------------- */
+/* Three columns on a warm ground, set entirely in blue. This block held the
+   registration steps before the workshop; it now holds what came out of it. */
+.outcomes{background:var(--sand);color:var(--blue);padding:96px 0 104px}
+.outcomes .cols{
   display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;
   align-items:start;
 }
-@media (max-width:900px){.register .cols{grid-template-columns:1fr;gap:34px}}
-.register h2{
+@media (max-width:900px){.outcomes .cols{grid-template-columns:1fr;gap:34px}}
+.outcomes h2{
   font-family:var(--text);font-weight:600;color:var(--blue);
   font-size:clamp(1.9rem,4.1vw,2.8rem);line-height:1.12;
-  letter-spacing:-.022em;margin:0;
+  letter-spacing:-.022em;margin:0 0 20px;
 }
-/* Comico for the step markers — the wordmark face, caps only by design. */
-.register .step{
+/* Comico for the item names and the pending marker, caps only by design. */
+.outcomes .step{
   font-family:var(--wordmark);font-weight:400;font-size:27px;line-height:1;
   letter-spacing:.01em;color:var(--blue);margin:0 0 16px;
 }
-.register .facts{margin:28px 0 0}
-.register .facts > div{margin-bottom:20px}
-.register .facts > div:last-child{margin-bottom:0}
-.register dt{font-size:16px;font-weight:500;color:var(--blue);opacity:.6;margin-bottom:3px}
-.register dd{margin:0;font-size:20.5px;font-weight:700;line-height:1.3;color:var(--blue)}
-/* Comico for the pending date, as in the programme. */
-.register dd.tbd-val{font-family:var(--wordmark);font-weight:400;font-size:24px;letter-spacing:.01em}
-.register p{font-size:20.5px;line-height:1.32;font-weight:500;color:var(--blue);margin:0 0 16px}
-.register p:last-child{margin-bottom:0}
-.register a.go{
-  display:inline-block;font-size:20.5px;font-weight:700;color:var(--blue);
-  text-decoration:none;
-  background-image:linear-gradient(var(--yellow),var(--yellow));
-  background-repeat:no-repeat;background-size:100% .55em;background-position:0 88%;
+.outcomes p{font-size:20.5px;line-height:1.32;font-weight:500;color:var(--blue);margin:0 0 16px}
+.outcomes p:last-child{margin-bottom:0}
+.outcomes .soon{
+  display:inline-block;font-family:var(--wordmark);font-weight:400;font-size:20px;
+  line-height:1;letter-spacing:.01em;color:var(--ink);
+  background:var(--yellow);padding:6px 9px 5px;border-radius:2px;
 }
-.register a.go:hover{background-size:100% 1em;background-position:0 100%}
 
 /* ---------------- contact ---------------- */
 /* Closes the page on a cornflower ground with white type, centred to bookend the
@@ -575,7 +601,7 @@ body{padding-top:72px}
       <a class="lnk" href="#program">Program</a>
       <a class="lnk ext" href="https://web.cvent.com/event/c258aabd-a362-447f-a75c-0f191c0b13b1/summary" target="_blank" rel="noopener">UIST&nbsp;'26</a>
     </nav>
-    <a class="join" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Join Us!</a>
+    <a class="join" href="#photos">Photos</a>
   </div>
 </header>
 
@@ -587,9 +613,10 @@ body{padding-top:72px}
       <span class="typed" aria-hidden="true"><span class="chars"></span><span class="caret"></span></span>
       <span class="sr-only">Materializing Imagination through Prompting the Physical World</span>
     </p>
-    <p class="when">November 2, 2026 &nbsp;·&nbsp; Detroit Marriott at the Renaissance Center</p>
+    <p class="when">November 2, 2026 &nbsp;·&nbsp; Detroit Marriott at the Renaissance Center<br>
+      <span class="thanks">Thank you to everyone who joined us in Detroit.</span></p>
     <div class="cta">
-      <a class="btn" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Call for Participation</a>
+      <a class="btn" href="#photos">Workshop Photos</a>
       <a class="btn o" href="the-world-as-a-canvas-uist26-workshop.pdf">Workshop Proposal</a>
     </div>
   </div>
@@ -617,7 +644,7 @@ body{padding-top:72px}
 <section class="topics" id="scope">
   <div class="wrap">
     <h2>Six Challenges</h2>
-    <p class="lede">Each challenge frames open questions we will refine together and carry into the
+    <p class="lede">Each challenge framed open questions we refined together and carried into the
     afternoon prototyping session.</p>
     <div class="grid">
       <div class="tp">
@@ -775,33 +802,40 @@ body{padding-top:72px}
   </div>
 </section>
 
-<section class="register" id="register">
+<section class="photos" id="photos">
+  <div class="wrap">
+    <h2>Photos</h2>
+    <p class="lede">Step back into the room. These 360° photos were taken by Ruofei Du
+    during the day; drag to look around.</p>
+    <ul class="shots">
+      <li><a href="https://tool.duruofei.com/360viewer/?src=IMG_20261102_100112_00_012_world_canvas_workshop.jpg" target="_blank" rel="noopener">
+        <span class="deg">360°</span><span class="ttl">The Workshop</span><span class="open">Open the viewer &nearr;</span></a></li>
+      <li><a href="https://tool.duruofei.com/360viewer/?src=IMG_20261102_142922_00_024_world_canvas_lunch.jpg" target="_blank" rel="noopener">
+        <span class="deg">360°</span><span class="ttl">Lunch, Take One</span><span class="open">Open the viewer &nearr;</span></a></li>
+      <li><a href="https://tool.duruofei.com/360viewer/?src=IMG_20261102_142939_00_025_world_canvas_lunc.jpg" target="_blank" rel="noopener">
+        <span class="deg">360°</span><span class="ttl">Lunch, Take Two</span><span class="open">Open the viewer &nearr;</span></a></li>
+      <li><a href="https://tool.duruofei.com/360viewer/?src=IMG_20261102_180131_00_028_world_canvas.jpg" target="_blank" rel="noopener">
+        <span class="deg">360°</span><span class="ttl">The World as a Canvas</span><span class="open">Open the viewer &nearr;</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="outcomes" id="outcomes">
   <div class="wrap">
     <div class="cols">
       <div>
-        <h2>Registration</h2>
-        <dl class="facts">
-          <div>
-            <dt>Sign-up deadline</dt>
-            <dd>Until all 35 seats are filled</dd>
-          </div>
-          <div>
-            <dt>Notification</dt>
-            <dd class="tbd-val">TBD</dd>
-          </div>
-        </dl>
+        <h2>Outcomes</h2>
+        <p>What the room made on November 2 will be shared here as it is ready.</p>
       </div>
       <div>
-        <p class="step">Step 1</p>
-        <p>Register for UIST '26 and <strong>select this workshop</strong>, or add it to an
-        existing registration at any time.</p>
-        <p><a class="go" href="https://web.cvent.com/event/c258aabd-a362-447f-a75c-0f191c0b13b1/summary" target="_blank" rel="noopener">Register for UIST '26 &nearr;</a></p>
+        <p class="step">Research Agenda</p>
+        <p>The open questions and design considerations that came out of the six challenges.</p>
+        <p><span class="soon">Coming soon</span></p>
       </div>
       <div>
-        <p class="step">Step 2</p>
-        <p>Tell us what you work on in a short form, so we can shape the day around the people
-        in the room.</p>
-        <p><a class="go" href="https://forms.gle/YimA9d9Bz61KMN8VA" target="_blank" rel="noopener">Open the form &nearr;</a></p>
+        <p class="step">Prototypes &amp; Report</p>
+        <p>What each team built in the prototyping sessions, with photos, in a post-workshop report.</p>
+        <p><span class="soon">Coming soon</span></p>
       </div>
     </div>
   </div>
