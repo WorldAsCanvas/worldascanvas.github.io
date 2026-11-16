@@ -53,5 +53,4 @@ Fontshare API are each expressly permitted.
 
 ## Still to fill in
 
-- Photos: the Google Photos album link ("More photos!")
 - Research agenda and post-workshop report, once they are ready
